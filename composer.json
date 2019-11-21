@@ -1,5 +1,5 @@
 {
-    "name": "Woncer/woncer",
+    "name": "Luisdeb/woncer",
     "description": "This library serves as a toolbox for WordPress Nonces in PHP. It implements all the required classes and methods to asses common Account Admin actions in a secure way.",
     "type": "library",
     "license": "MIT",
@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Woncer": "src/"
+            "Luisdeb\\Woncer\\": "src/"
         }
     }
 }
