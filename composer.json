@@ -1,0 +1,16 @@
+{
+    "name": "Woncer/woncer",
+    "type": "library",
+    "description": "This library serves as a toolbox for WordPress Nonces in PHP. It implements all the required classes and methods to asses common Account Admin actions in a secure way.",
+    "keywords": ["WordPress","Nonces","OOP","security"],
+    "homepage": "https://inpsyde.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Luis De Benito",
+            "email": "louisdebenito@gmail.com",
+            "homepage": "https://github.com/luisrowley",
+            "role": "Backend Engineer"
+        }
+    ],
+}
