@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use Luisdeb\Woncer\Classes\WPNonce;
+use luisdeb\Woncer\Classes\WPNonce;
 
 /**
  * This class handles the logic to generate new WordPress Nonces.

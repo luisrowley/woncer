@@ -1,3 +1,3 @@
 <?php
 
-namespace Luisdeb\Woncer;
+namespace luisdeb\Woncer;

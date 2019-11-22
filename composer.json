@@ -1,5 +1,5 @@
 {
-    "name": "Luisdeb/woncer",
+    "name": "luisdeb/woncer",
     "description": "This library serves as a toolbox for WordPress Nonces in PHP. It implements all the required classes and methods to asses common Account Admin actions in a secure way.",
     "type": "library",
     "license": "MIT",
@@ -12,11 +12,11 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=7.0.0"
+        "php": "^7.0"
     },
     "autoload": {
         "psr-4": {
-            "Luisdeb\\Woncer\\": "src/"
+            "luisdeb\\Woncer\\": "src/"
         }
     },
     "require-dev": {

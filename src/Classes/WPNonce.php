@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luisdeb\Woncer\Classes;
+namespace luisdeb\Woncer\Classes;
 
 /**
  * This class handles the logic to generate new WordPress Nonces.
