@@ -3,7 +3,7 @@
 
 	<description>This defines the Inpsyde coding standards.</description>
 
-	<file>./src/Classes/NonceGenerator.php</file>
+	<file>./src/Classes/WPNonce.php</file>
 
 	<config name="text_domain" value="Woncer"/>
 

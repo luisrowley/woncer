@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use Luisdeb\Woncer\Classes\NonceGenerator;
+use Luisdeb\Woncer\Classes\WPNonce;
 
 /**
  * This class handles the logic to generate new WordPress Nonces.
@@ -12,7 +12,7 @@ use Luisdeb\Woncer\Classes\NonceGenerator;
  * @see https://codex.wordpress.org/Wordpress_Nonce_Implementation
  *
  */
-class NonceGeneratorTest extends TestCase{
+class WPNonceTest extends TestCase{
 
     private const CREATE_NONCE_FUNCTION_NAME = 'wp_create_nonce';
 

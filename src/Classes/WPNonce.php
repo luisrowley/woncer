@@ -11,20 +11,22 @@ namespace Luisdeb\Woncer\Classes;
  * @see https://codex.wordpress.org/Wordpress_Nonce_Implementation
  *
  */
-class NonceGenerator
+class WPNonce
 {
 
     const CREATE_NONCE_FUNCTION_NAME = 'wp_create_nonce';
 
     const NONCE_URL_FUNCTION_NAME = 'wp_nonce_url';
 
-    private $baseUrl;
+    const NONCE_FIELD_FUNCTION_NAME = 'wp_nonce_field';
 
     private $action;
 
     private $elementId;
 
     private $name;
+
+    private $url;
 
     private $token;
 
@@ -34,30 +36,49 @@ class NonceGenerator
             $this->setAction($action);
             $this->setElementId($elementId);
             $this->setName($name);
-            $this->CreateNonceToken($this->action.$this->elementId);
+            $this->setNonceToken($this->action.$this->elementId);
         }
     }
 
-
-    private function setAction($action) {
+    private function setAction(string $action)
+    {
         $this->action = $action;
     }
 
-    private function setElementId($id) {
+    private function setElementId(string $id)
+    {
         $this->element_id = $id;
     }
 
-    private function setName($name) {
+    private function setName(string $name)
+    {
         $this->name = $name;
     }
 
-    private function CreateNonceToken(string $actionFull) {
-        if (function_exists(self::CREATE_NONCE_FUNCTION_NAME)) {
-            $this->token = wp_create_nonce($actionFull);
-        }
+    private function setNonceToken(string $actionFull)
+    {
+        $this->token = createNonceToken($actionFull);
     }
 
+    private function createNonceToken(string $actionFull): string
+    {
+        $result = "";
+
+        if (function_exists(self::CREATE_NONCE_FUNCTION_NAME)) {
+            $result = wp_create_nonce($actionFull);
+        }
+
+        return $result;
+    }
+
+    private function addNonceToUrl(string $baseUrl, string $actionFull, string $name=""): string
+    {
+        $nonceUrl = "";
+
+        if (function_exists(self::NONCE_URL_FUNCTION_NAME)) {
+            $nonceUrl = wp_nonce_url($baseUrl, $actionFull);
+        }
+
+        return $nonceUrl;
+    }
 }
-
-
-?>
