@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Luisdeb\Woncer;
 
 /**
  * This class handles the logic to generate new WordPress Nonces.
  * It implements original WordPress funtions as per the doc files.
- * 
+ *
  * @see https://codex.wordpress.org/Wordpress_Nonce_Implementation
- * 
+ *
  */
 class NonceGenerator {
 
