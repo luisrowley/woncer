@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Luisdeb\Woncer;
+use PHPUnit\Framework\TestCase;
+use Luisdeb\Woncer\Classes\NonceGenerator;
 
 /**
  * This class handles the logic to generate new WordPress Nonces.
@@ -11,7 +12,7 @@ namespace Luisdeb\Woncer;
  * @see https://codex.wordpress.org/Wordpress_Nonce_Implementation
  *
  */
-class NonceGenerator {
+class NonceGeneratorTest extends TestCase{
 
     private const CREATE_NONCE_FUNCTION_NAME = 'wp_create_nonce';
 
@@ -56,7 +57,7 @@ class NonceGenerator {
         $this->element_id = $id;
     }
 
-    private function setName($name) {
+    public function setName(string $name): void {
         $this->name = $name;
     }
 

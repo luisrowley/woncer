@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<ruleset name="MyProjectCodingStandard">
+
+	<description>This defines the Inpsyde coding standards.</description>
+
+	<file>./src/Classes/NonceGenerator.php</file>
+
+	<config name="text_domain" value="Woncer"/>
+
+	<rule ref="Inpsyde"/>
+
+</ruleset>
