@@ -36,17 +36,6 @@ class WPNonceChecker extends WPNonce
     const VERIFY_NONCE_FUNCTION_NAME = 'wp_verify_nonce';
 
     /**
-     * The name value for the nonce.
-     *
-     * @var string $queryArg
-     */
-    private $queryArg;
-
-    public function __construct(string $action, string $name)
-    {
-    }
-
-    /**
      * Tests if the nonce is valid or if the request was referred from an admin.
      *
      * @see https://codex.wordpress.org/Function_Reference/check_admin_referer
