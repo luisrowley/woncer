@@ -13,34 +13,61 @@ namespace luisdeb\Woncer\Classes;
 class WPNonce
 {
     /**
-     * The current WordPress create nonce function name.
+     * The current WordPress `create nonce function name`.
      *
      * @var string CREATE_NONCE_FUNCTION_NAME
      */
     const CREATE_NONCE_FUNCTION_NAME = 'wp_create_nonce';
 
     /**
-     * The current WordPress nonce URL function name.
+     * The current WordPress `nonce URL function name`.
      *
      * @var string NONCE_URL_FUNCTION_NAME
      */
     const NONCE_URL_FUNCTION_NAME = 'wp_nonce_url';
 
     /**
-     * The current WordPress nonce URL function name.
+     * The current WordPress `nonce field function name`.
      *
      * @var string NONCE_FIELD_FUNCTION_NAME
      */
     const NONCE_FIELD_FUNCTION_NAME = 'wp_nonce_field';
 
+    /**
+     * The current WordPress `default nonce name`.
+     *
+     * @var string NONCE_FIELD_FUNCTION_NAME
+     */
     const DEFAULT_NONCE_NAME = '_wpnonce';
 
+    /**
+     * Value to represent the context for a nonce.
+     *
+     * @var string|int $action
+     */
     private $action;
 
+    /**
+     * The name value for the nonce.
+     *
+     * @var string $name
+     */
     private $name;
 
+    /**
+     * One-time cryptographic hash to verify any user, user session and action.
+     *
+     * @var string $token
+     */
     private $token;
 
+    /**
+     * Class constructor.
+     * Initializes the action, name and token properties.
+     *
+     * @param string $action
+     * @param string $name
+     */
     public function __construct(string $action, string $name)
     {
         if (trim($name) === "") {
@@ -54,26 +81,43 @@ class WPNonce
         }
     }
 
+    /**
+     * Setter method for the `$action` private property.
+     *
+     * @param string $action | the nonce action.
+     */
     private function setAction(string $action)
     {
         $this->action = $action;
     }
 
-    private function setElementId(string $id)
-    {
-        $this->element_id = $id;
-    }
-
+    /**
+     * Setter method for the `$name` private property.
+     *
+     * @param string $name | the nonce name.
+     */
     private function setName(string $name)
     {
         $this->name = $name;
     }
 
+    /**
+     * Setter method for the `$token` private property.
+     *
+     * @param string $action | the nonce context.
+     */
     private function setNonceToken(string $action)
     {
         $this->token = createNonceToken($action);
     }
 
+    /**
+     * Creates a new token tied to a specific action, user, user session, and window of time
+     *
+     * @param string $action | the nonce context.
+     * 
+     * @return string $result | the cryptographic token hash
+     */
     private function createNonceToken(string $action): string
     {
         $result = "";
@@ -85,6 +129,15 @@ class WPNonce
         return $result;
     }
 
+    /**
+     * Retrieve URL with nonce added to URL query.
+     *
+     * @param string $actionUrl | the URL to add nonce action.
+     * @param string $action    | the nonce action name.
+     * @param string $name      | nonce name.
+     * 
+     * @return string $nonceUrl | the cryptographic token hash
+     */
     private function addNonceUrl(
         string $actionUrl,
         string $action = null,
@@ -102,6 +155,16 @@ class WPNonce
         return $nonceUrl;
     }
 
+    /**
+     * Retrieves or displays the nonce hidden form field.
+     *
+     * @param string $action  | the nonce action name.
+     * @param string $name    | nonce name.
+     * @param bool $referer   | whether to create the referer hidden form field.
+     * @param bool $echo      | whether to display the hidden form field.
+     * 
+     * @return string $nonceField | the nonce hidden form field
+     */
     private function addNonceToForm(
         string $action = null,
         string $name = null,
