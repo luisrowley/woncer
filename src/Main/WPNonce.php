@@ -73,7 +73,7 @@ class WPNonce implements WPNonceInterface
     public function __construct(string $action, string $name)
     {
         if (trim($name) === "") {
-            $name = DEFAULT_NONCE_NAME;
+            $name = self::DEFAULT_NONCE_NAME;
         }
 
         if (isset($action) && trim($action) !== "") {
