@@ -16,7 +16,9 @@
     },
     "autoload": {
         "psr-4": {
-            "luisdeb\\Woncer\\": "src/"
+            "luisdeb\\Woncer\\": "src/",
+            "luisdeb\\Woncer\\Main\\": "src/Main/",
+            "luisdeb\\Woncer\\Interfaces\\": "src/Interfaces/"
         }
     },
     "require-dev": {

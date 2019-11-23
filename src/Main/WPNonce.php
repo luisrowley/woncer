@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace luisdeb\Woncer\Classes;
+namespace luisdeb\Woncer\Main;
+
+use luisdeb\Woncer\Interfaces\WPNonceInterface as WPNonceInterface;
 
 /**
  * This class handles the logic to generate new WordPress Nonces.
@@ -10,7 +12,7 @@ namespace luisdeb\Woncer\Classes;
  *
  * @see https://codex.wordpress.org/Wordpress_Nonce_Implementation
  */
-class WPNonce
+class WPNonce implements WPNonceInterface
 {
     /**
      * The current WordPress `create nonce function name`.
@@ -114,8 +116,10 @@ class WPNonce
     /**
      * Creates a new token tied to a specific action, user, user session, and window of time
      *
+     * @see https://developer.wordpress.org/reference/functions/wp_create_nonce/
+     *
      * @param string $action | the nonce context.
-     * 
+     *
      * @return string $result | the cryptographic token hash
      */
     private function createNonceToken(string $action): string
@@ -132,10 +136,15 @@ class WPNonce
     /**
      * Retrieve URL with nonce added to URL query.
      *
+     * @see https://developer.wordpress.org/reference/functions/wp_nonce_url/
+     *
      * @param string $actionUrl | the URL to add nonce action.
      * @param string $action    | the nonce action name.
      * @param string $name      | nonce name.
-     * 
+     *
+     * @var string $nonceAction | takes the local action value in case $action is not set.
+     * @var string $nonceName   | takes the local name value in case $name is not set.
+     *
      * @return string $nonceUrl | the cryptographic token hash
      */
     private function addNonceUrl(
@@ -158,11 +167,16 @@ class WPNonce
     /**
      * Retrieves or displays the nonce hidden form field.
      *
+     * @see https://codex.wordpress.org/Function_Reference/wp_nonce_field
+     *
      * @param string $action  | the nonce action name.
      * @param string $name    | nonce name.
      * @param bool $referer   | whether to create the referer hidden form field.
      * @param bool $echo      | whether to display the hidden form field.
-     * 
+     *
+     * @var string $nonceAction | takes the local action value in case $action is not set.
+     * @var string $nonceName   | takes the local name value in case $name is not set.
+     *
      * @return string $nonceField | the nonce hidden form field
      */
     private function addNonceToForm(
