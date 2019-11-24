@@ -36,6 +36,13 @@ class WPNonce implements WPNonceInterface
     const NONCE_FIELD_FUNCTION_NAME = 'wp_nonce_field';
 
     /**
+     * Default action.
+     *
+     * @var int DEFAULT_NONCE_ACTION
+     */
+    const DEFAULT_NONCE_ACTION = -1;
+
+    /**
      * The current WordPress `default nonce name`.
      *
      * @var string NONCE_FIELD_FUNCTION_NAME
@@ -72,15 +79,17 @@ class WPNonce implements WPNonceInterface
      */
     public function __construct(string $action, string $name)
     {
+        if (trim($action) === "") {
+            $action = self::DEFAULT_NONCE_ACTION;
+        }
+
         if (trim($name) === "") {
             $name = self::DEFAULT_NONCE_NAME;
         }
 
-        if (isset($action) && trim($action) !== "") {
-            $this->setAction($action);
-            $this->setName($name);
-            $this->setNonceToken($this->action);
-        }
+        $this->setAction($action);
+        $this->setName($name);
+        $this->setNonceToken($this->action);
     }
 
     /**
