@@ -3,62 +3,67 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
+
+use Brain\Monkey\Functions as MonkeyFunctions;
+
 use luisdeb\Woncer\Main\WPNonce;
 
+use luisdeb\Woncer\Main\WPNonceFactory;
+
 /**
- * This class handles the logic to generate new WordPress Nonces.
- * It implements original WordPress funtions as per the doc files.
+ * This class Implements the Unit Test methodology for detecting bugs.
  *
- * @see https://codex.wordpress.org/Wordpress_Nonce_Implementation
+ * PHPUnit version 8.0 * 
+ * @see https://phpunit.de/getting-started/phpunit-8.html
  *
  */
-class WPNonceTest extends TestCase{
+class WPNonceTest extends TestCase
+{
 
-    private const CREATE_NONCE_FUNCTION_NAME = 'wp_create_nonce';
-
-    private const NONCE_URL_FUNCTION_NAME = 'wp_nonce_url';
-
-    private $base_url;
-
-    private $action;
-
-    private $actionFull;
-
-    private $element_id;
-
-    private $name;
-
-    private $token;
-
-    public function __construct($action, $element_id, $name) {
-
-        $this->setAction($action);
-        $this->setElementId($element_id);
-        $this->setName($name);
-
-        if( !empty($this->action) && !empty($this->element_id) )
-        {
-            $this->actionFull = $this->action.$this->element_id ;
-
-            $this->token = call_user_func(
-                            self::CREATE_NONCE_FUNCTION_NAME,
-                            $this->actionFull
-                           );
-        }
-
+    public function testEmpty()
+    {
+        $this->assertEmpty([]);
     }
 
-
-    private function setAction($action) {
-        $this->action = $action;
+    public function testEquals()
+    {
+        $this->assertEquals(1, 1);
     }
 
-    private function setElementId($id) {
-        $this->element_id = $id;
+    /**
+     * @dataProvider additionProvider
+     */
+    public function testAdd($a, $b, $expected)
+    {
+        $this->assertEquals($expected, $a + $b);
     }
 
-    public function setName(string $name): void {
-        $this->name = $name;
+    public function additionProvider()
+    {
+        return [
+            [0, 0, 0],
+            [0, 1, 1],
+            [1, 0, 1]
+        ];
+    }
+
+    /**
+     * Tests the WpNonce url method.
+     *
+     * @return void
+     */
+    public function testUrl() {
+        $actionUrl      = 'http://www.somewpdomain.es';
+        $wpNonceFactory = new WPNonceFactory();
+        MonkeyFunctions\expect('wp_create_nonce')->once();
+        $nonce = $wpNonceFactory->createDefault();
+        $result  = $nonce->url($actionUrl);
+        $this->assertFalse($result);
+        MonkeyFunctions\expect('wp_nonce_url')
+            ->once()
+            ->andReturn($actionUrl . '?escaped=with-nonce-action');
+        $result = $nonce->url($actionUrl);
+        $this->assertStringStartsWith('http', $result);
     }
 
 }
