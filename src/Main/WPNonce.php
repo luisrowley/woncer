@@ -119,7 +119,7 @@ class WPNonce implements WPNonceInterface
      */
     private function setNonceToken(string $action)
     {
-        $this->token = createNonceToken($action);
+        $this->token = $this->createNonceToken($action);
     }
 
     /**
@@ -131,12 +131,12 @@ class WPNonce implements WPNonceInterface
      *
      * @return string $result | the cryptographic token hash
      */
-    private function createNonceToken(string $action): string
+    public function createNonceToken(string $action): string
     {
         $result = "";
 
         if (function_exists(self::CREATE_NONCE_FUNCTION_NAME)) {
-            $result = wp_create_nonce($action);
+            $result = (string)wp_create_nonce($action);
         }
 
         return $result;
@@ -156,7 +156,7 @@ class WPNonce implements WPNonceInterface
      *
      * @return string $nonceUrl | the cryptographic token hash
      */
-    private function addNonceUrl(
+    public function addNonceUrl(
         string $actionUrl,
         string $action = null,
         string $name = null
@@ -188,7 +188,7 @@ class WPNonce implements WPNonceInterface
      *
      * @return string $nonceField | the nonce hidden form field
      */
-    private function addNonceToForm(
+    public function addNonceToForm(
         string $action = null,
         string $name = null,
         bool $referer = true,

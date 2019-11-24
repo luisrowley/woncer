@@ -27,13 +27,13 @@ class WPNonceFactory
     const DEFAULT_NONCE_NAME = '_wpnonce';
 
     /**
-     * Creates and returns a new
+     * Creates and returns a new WPNonce instance
      *
-     * @return WpNonce
+     * @return WPNonce
      */
     public static function createDefault(): WPNonce
     {
-        $action = self::DEFAULT_NONCE_ACTION;
+        $action = (string)self::DEFAULT_NONCE_ACTION;
         $name = self::DEFAULT_NONCE_NAME;
 
         return new WPNonce($action, $name);
