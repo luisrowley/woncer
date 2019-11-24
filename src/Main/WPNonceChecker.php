@@ -100,13 +100,13 @@ class WPNonceChecker extends WPNonce
      *
      * @return int $result | value `0` if nonce is invalid.
      *                     | value `1` if nonce was generated in the past 12 hours or less.
-     *                     | value `2` if nonce was generated between 12 and 24 hours ago. 
-     * 
-     * wp_verify_nonce returns a boolean `false` if nonce is invalid which is converted to `0`, 
+     *                     | value `2` if nonce was generated between 12 and 24 hours ago.
+     *
+     * wp_verify_nonce returns a boolean `false` if nonce is invalid which is converted to `0`,
      * as multiple return types are not supported yet, and will not be until PHP 8.0 is released.
-     * 
+     *
      * @see https://wiki.php.net/rfc/union_types_v2
-     * 
+     *
      */
     private function verifyNonce(
         string $nonce,

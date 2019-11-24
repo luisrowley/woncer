@@ -7,7 +7,7 @@ namespace luisdeb\Woncer\Main;
 /**
  * This class provides with the default values and Nonce creation support.
  * It follows the Factory design pattern to propose the simplest possible scenario.
- * 
+ *
  * @see https://refactoring.guru/design-patterns/factory-method/php/example
  */
 class WPNonceFactory
