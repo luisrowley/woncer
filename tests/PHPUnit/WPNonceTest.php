@@ -37,7 +37,6 @@ class WPNonceTest extends TestCase
         $result = $nonce->url($actionUrl);
         $this->assertStringStartsWith('http', $result);
     }
-
 }
 
 
