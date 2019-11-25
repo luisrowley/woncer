@@ -54,7 +54,7 @@ class WPNonce implements WPNonceInterface
      *
      * @var string|int $action
      */
-    private $action;
+    protected $action;
 
     /**
      * The name value for the nonce.

@@ -27,6 +27,8 @@ class WPNonceCheckerTest extends TestCase
             ->once();
         $WPNonceChecker = $WPNonceFactory->createDefaultChecker();
         $result = $WPNonceChecker->verifyNonce($sampleToken);
+        $this->assertEmpty($result);
+
     }
 }
 
