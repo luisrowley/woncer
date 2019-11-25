@@ -108,7 +108,7 @@ class WPNonceChecker extends WPNonce
      * @see https://wiki.php.net/rfc/union_types_v2
      *
      */
-    private function verifyNonce(
+    public function verifyNonce(
         string $nonce,
         string $action = null
     ): int {

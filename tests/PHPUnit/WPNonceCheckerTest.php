@@ -25,7 +25,7 @@ class WPNonceCheckerTest extends TestCase
         $WPNonceFactory = new WPNonceFactory();
         MonkeyFunctions\expect('wp_create_nonce')
             ->once();
-        $WPNonceChecker = $WPNonceFactory->createDefault();
+        $WPNonceChecker = $WPNonceFactory->createDefaultChecker();
         $result = $WPNonceChecker->verifyNonce($sampleToken);
     }
 }
