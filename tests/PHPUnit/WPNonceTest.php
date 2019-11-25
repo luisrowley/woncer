@@ -11,7 +11,7 @@ use luisdeb\Woncer\Main\WPNonce;
 use luisdeb\Woncer\Main\WPNonceFactory;
 
 /**
- * This class Implements the Unit Test methodology for detecting bugs.
+ * This class Implements the Unit Test methodology for the WPNonce class.
  *
  * PHPUnit version 8.0 * 
  * @see https://phpunit.de/getting-started/phpunit-8.html

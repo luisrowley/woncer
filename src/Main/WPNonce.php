@@ -40,7 +40,7 @@ class WPNonce implements WPNonceInterface
      *
      * @var int DEFAULT_NONCE_ACTION
      */
-    const DEFAULT_NONCE_ACTION = -1;
+    const DEFAULT_NONCE_ACTION = '-1';
 
     /**
      * The current WordPress `default nonce name`.
@@ -54,14 +54,14 @@ class WPNonce implements WPNonceInterface
      *
      * @var string|int $action
      */
-    protected $action;
+    public $action;
 
     /**
      * The name value for the nonce.
      *
      * @var string $name
      */
-    private $name;
+    public $name;
 
     /**
      * One-time cryptographic hash to verify any user, user session and action.

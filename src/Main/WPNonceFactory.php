@@ -17,7 +17,7 @@ class WPNonceFactory
      *
      * @var int DEFAULT_NONCE_ACTION
      */
-    const DEFAULT_NONCE_ACTION = -1;
+    const DEFAULT_NONCE_ACTION = '-1';
 
     /**
      * Default nonce name.
@@ -33,7 +33,7 @@ class WPNonceFactory
      */
     public static function createDefault(): WPNonce
     {
-        $action = (string)self::DEFAULT_NONCE_ACTION;
+        $action = self::DEFAULT_NONCE_ACTION;
         $name = self::DEFAULT_NONCE_NAME;
 
         return new WPNonce($action, $name);
