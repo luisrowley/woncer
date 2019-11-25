@@ -27,7 +27,7 @@ class WPNonceTest extends TestCase
     public function testUrl() {
         $actionUrl      = 'http://www.somewpdomain.com';
         $WPNonceFactory = new WPNonceFactory();
-        MonkeyFunctions\expect('wp_create_nonce')
+        MonkeyFunctions\expect(WPNonce::CREATE_NONCE_FUNCTION_NAME)
             ->once();
         $WPNonce = $WPNonceFactory->createDefault();
         $result  = $WPNonce->addNonceUrl($actionUrl);
@@ -47,12 +47,12 @@ class WPNonceTest extends TestCase
     public function testForm() {
         $WPField   = '<input type="hidden" id="_wpnonce" name="_wpnonce" value="nonce" />';
         $WPNonceFactory = new WPNonceFactory();
-        MonkeyFunctions\expect('wp_create_nonce')
+        MonkeyFunctions\expect(WPNonce::CREATE_NONCE_FUNCTION_NAME)
             ->once();
         $WPNonce = $WPNonceFactory->createDefault();
         $result  = $WPNonce->addNonceToForm();
         $this->assertEmpty($result);
-        MonkeyFunctions\expect('wp_nonce_field')
+        MonkeyFunctions\expect(WPNonce::NONCE_FIELD_FUNCTION_NAME)
             ->once()
             ->andReturn($WPField);
         $result = $WPNonce->addNonceToForm();

@@ -29,6 +29,11 @@ class WPNonceCheckerTest extends TestCase
         $result = $WPNonceChecker->verifyNonce($sampleToken);
         $this->assertEmpty($result);
 
+        MonkeyFunctions\expect(WPNonceChecker::VERIFY_NONCE_FUNCTION_NAME)
+            ->once()
+            ->andReturn(2);
+
+        
     }
 }
 
