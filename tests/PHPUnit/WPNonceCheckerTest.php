@@ -19,6 +19,9 @@ use luisdeb\Woncer\Main\WPNonceFactory;
  */
 class WPNonceCheckerTest extends TestCase
 {
+    public function testCheckAdminReferer() {
+    }
+
     public function testVerifyNonce() {
 
         $sampleToken = "mySampleToken";
@@ -31,9 +34,19 @@ class WPNonceCheckerTest extends TestCase
 
         MonkeyFunctions\expect(WPNonceChecker::VERIFY_NONCE_FUNCTION_NAME)
             ->once()
-            ->andReturn(2);
+            ->andReturn(0);
 
+        $result = $WPNonceChecker->verifyNonce($sampleToken);
+        $this->assertIsInt($result);
+        $this->assertEquals(0, $result);
         
+        MonkeyFunctions\expect(WPNonceChecker::VERIFY_NONCE_FUNCTION_NAME)
+            ->once()
+            ->andReturn(1);
+
+        $result = $WPNonceChecker->verifyNonce($sampleToken);
+        $this->assertIsInt($result);
+        $this->assertEquals(1, $result);
     }
 }
 
