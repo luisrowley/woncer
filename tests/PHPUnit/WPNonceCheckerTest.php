@@ -27,6 +27,41 @@ class WPNonceCheckerTest extends TestCase
         $WPNonceChecker = $WPNonceFactory->createDefaultChecker();
         $result = $WPNonceChecker->checkAdminReferer();
         $this->assertEmpty($result);
+        
+        MonkeyFunctions\expect(WPNonceChecker::CHECK_ADMIN_REFERER_FUNCTION_NAME)
+            ->once()
+            ->andReturn(false);
+
+        $result = $WPNonceChecker->checkAdminReferer();
+        $this->assertIsInt($result);
+        $this->assertEquals($result, 0);
+
+        MonkeyFunctions\expect(WPNonceChecker::CHECK_ADMIN_REFERER_FUNCTION_NAME)
+            ->once()
+            ->andReturn(0);
+
+        $result = $WPNonceChecker->checkAdminReferer();
+        $this->assertIsInt($result);
+        $this->assertEquals($result, 0);
+
+        MonkeyFunctions\expect(WPNonceChecker::CHECK_ADMIN_REFERER_FUNCTION_NAME)
+            ->once()
+            ->andReturn(1);
+
+        $result = $WPNonceChecker->checkAdminReferer();
+        $this->assertIsInt($result);
+        $this->assertEquals($result, 1);
+
+        MonkeyFunctions\expect(WPNonceChecker::CHECK_ADMIN_REFERER_FUNCTION_NAME)
+            ->once()
+            ->andReturn(2);
+
+        $result = $WPNonceChecker->checkAdminReferer();
+        $this->assertIsInt($result);
+        $this->assertEquals($result, 2);
+    }
+
+    public function testCheckAjaxReferer() {
     }
 
     public function testVerifyNonce() {
@@ -38,6 +73,14 @@ class WPNonceCheckerTest extends TestCase
         $WPNonceChecker = $WPNonceFactory->createDefaultChecker();
         $result = $WPNonceChecker->verifyNonce($sampleToken);
         $this->assertEmpty($result);
+
+        MonkeyFunctions\expect(WPNonceChecker::VERIFY_NONCE_FUNCTION_NAME)
+            ->once()
+            ->andReturn(false);
+
+        $result = $WPNonceChecker->verifyNonce($sampleToken);
+        $this->assertIsInt($result);
+        $this->assertEquals(0, $result);
 
         MonkeyFunctions\expect(WPNonceChecker::VERIFY_NONCE_FUNCTION_NAME)
             ->once()
@@ -54,6 +97,14 @@ class WPNonceCheckerTest extends TestCase
         $result = $WPNonceChecker->verifyNonce($sampleToken);
         $this->assertIsInt($result);
         $this->assertEquals(1, $result);
+
+        MonkeyFunctions\expect(WPNonceChecker::VERIFY_NONCE_FUNCTION_NAME)
+            ->once()
+            ->andReturn(2);
+
+        $result = $WPNonceChecker->verifyNonce($sampleToken);
+        $this->assertIsInt($result);
+        $this->assertEquals(2, $result);
     }
 }
 
