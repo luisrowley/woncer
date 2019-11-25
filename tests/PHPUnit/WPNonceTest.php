@@ -20,8 +20,15 @@ use luisdeb\Woncer\Main\WPNonceFactory;
 class WPNonceTest extends TestCase
 {
     /**
-     * Tests WPNonce::addNonceUrl() method.
-     *
+     * Unit tests for WPNonce::addNonceUrl() method.
+     * 
+     * covers @method WPNonceFactory::createDefault
+     * covers @method WPNonce::__construct
+     * covers @method WPNonce::setAction
+     * covers @method WPNonce::setName
+     * covers @method WPNonce::setNonceToken
+     * covers @method WPNonce::addNonceUrl
+     * 
      * @return void
      */
     public function testUrl() {
