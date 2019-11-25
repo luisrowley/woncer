@@ -24,6 +24,7 @@ class WPNonceCheckerTest extends TestCase
         $WPNonceFactory = new WPNonceFactory();
         MonkeyFunctions\expect(WPNonceChecker::CREATE_NONCE_FUNCTION_NAME)
             ->once();
+        
         $WPNonceChecker = $WPNonceFactory->createDefaultChecker();
         $result = $WPNonceChecker->checkAdminReferer();
         $this->assertEmpty($result);
@@ -62,6 +63,46 @@ class WPNonceCheckerTest extends TestCase
     }
 
     public function testCheckAjaxReferer() {
+
+        $WPNonceFactory = new WPNonceFactory();
+        MonkeyFunctions\expect(WPNonceChecker::CHECK_AJAX_REFERER_FUNCTION_NAME)
+            ->once();
+        
+        $WPNonceChecker = $WPNonceFactory->createDefaultChecker();
+        $result = $WPNonceChecker->checkAjaxReferer();
+        $this->assertEmpty($result);
+
+        MonkeyFunctions\expect(WPNonceChecker::CHECK_AJAX_REFERER_FUNCTION_NAME)
+            ->once()
+            ->andReturn(false);
+
+        $result = $WPNonceChecker->checkAjaxReferer();
+        $this->assertIsInt($result);
+        $this->assertEquals($result, 0);
+
+        MonkeyFunctions\expect(WPNonceChecker::CHECK_AJAX_REFERER_FUNCTION_NAME)
+            ->once()
+            ->andReturn(0);
+
+        $result = $WPNonceChecker->checkAjaxReferer();
+        $this->assertIsInt($result);
+        $this->assertEquals($result, 0);
+
+        MonkeyFunctions\expect(WPNonceChecker::CHECK_AJAX_REFERER_FUNCTION_NAME)
+            ->once()
+            ->andReturn(1);
+
+        $result = $WPNonceChecker->checkAjaxReferer();
+        $this->assertIsInt($result);
+        $this->assertEquals($result, 1);
+
+        MonkeyFunctions\expect(WPNonceChecker::CHECK_AJAX_REFERER_FUNCTION_NAME)
+            ->once()
+            ->andReturn(2);
+
+        $result = $WPNonceChecker->checkAjaxReferer();
+        $this->assertIsInt($result);
+        $this->assertEquals($result, 2);
     }
 
     public function testVerifyNonce() {

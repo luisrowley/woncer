@@ -7,6 +7,7 @@
 	<file>./src/Main/WPNonceChecker.php</file>
 	<file>./src/Main/WPNonceFactory.php</file>
 	<file>./src/Interfaces/WPNonceInterface.php</file>
+	<file>./tests/PHPUnit/WPNonceCheckerTest.php</file>
 
 	<config name="text_domain" value="Woncer"/>
 
