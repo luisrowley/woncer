@@ -32,7 +32,7 @@ class WPNonceTest extends TestCase
         $WPNonce = $WPNonceFactory->createDefault();
         $result  = $WPNonce->addNonceUrl($actionUrl);
         $this->assertEmpty($result);
-        MonkeyFunctions\expect('wp_nonce_url')
+        MonkeyFunctions\expect(WPNonce::NONCE_URL_FUNCTION_NAME)
             ->once()
             ->andReturn($actionUrl . '?escaped=with-nonce-action');
         $result = $WPNonce->addNonceUrl($actionUrl);

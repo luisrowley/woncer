@@ -20,13 +20,19 @@ use luisdeb\Woncer\Main\WPNonceFactory;
 class WPNonceCheckerTest extends TestCase
 {
     public function testCheckAdminReferer() {
+
+        $WPNonceFactory = new WPNonceFactory();
+        MonkeyFunctions\expect(WPNonceChecker::CREATE_NONCE_FUNCTION_NAME)
+            ->once();
+        $WPNonceChecker = $WPNonceFactory->createDefaultChecker();
+        
     }
 
     public function testVerifyNonce() {
 
         $sampleToken = "mySampleToken";
         $WPNonceFactory = new WPNonceFactory();
-        MonkeyFunctions\expect('wp_create_nonce')
+        MonkeyFunctions\expect(WPNonceChecker::CREATE_NONCE_FUNCTION_NAME)
             ->once();
         $WPNonceChecker = $WPNonceFactory->createDefaultChecker();
         $result = $WPNonceChecker->verifyNonce($sampleToken);
