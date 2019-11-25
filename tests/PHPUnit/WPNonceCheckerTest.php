@@ -14,12 +14,20 @@ use luisdeb\Woncer\Main\WPNonceFactory;
  * This class Implements the Unit Test methodology for detecting bugs.
  *
  * PHPUnit version 8.0 * 
- * @see https://phpunit.de/getting-started/phpunit-8.html
- *
+ * @link https://phpunit.de/getting-started/phpunit-8.html
+ * 
  */
 class WPNonceCheckerTest extends TestCase
 {
-    
+    public function testVerifyNonce() {
+
+        $sampleToken = "mySampleToken";
+        $WPNonceFactory = new WPNonceFactory();
+        MonkeyFunctions\expect('wp_create_nonce')
+            ->once();
+        $WPNonceChecker = $WPNonceFactory->createDefault();
+        $result = $WPNonceChecker->verifyNonce($sampleToken);
+    }
 }
 
 

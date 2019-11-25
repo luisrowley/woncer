@@ -8,7 +8,7 @@ namespace luisdeb\Woncer\Main;
  * This class provides with the default values and Nonce creation support.
  * It follows the Factory design pattern to propose the simplest possible scenario.
  *
- * @see https://refactoring.guru/design-patterns/factory-method/php/example
+ * @link https://refactoring.guru/design-patterns/factory-method/php/example
  */
 class WPNonceFactory
 {
@@ -27,7 +27,7 @@ class WPNonceFactory
     const DEFAULT_NONCE_NAME = '_wpnonce';
 
     /**
-     * Creates and returns a new WPNonce instance
+     * Creates and returns a default WPNonce instance
      *
      * @return WPNonce
      */
@@ -37,5 +37,18 @@ class WPNonceFactory
         $name = self::DEFAULT_NONCE_NAME;
 
         return new WPNonce($action, $name);
+    }
+
+    /**
+     * Creates and returns a default WPNonceChecker instance
+     *
+     * @return WPNonceChecker
+     */
+    public static function createDefaultChecker(): WPNonceChecker
+    {
+        $action = (string)self::DEFAULT_NONCE_ACTION;
+        $name = self::DEFAULT_NONCE_NAME;
+
+        return new WPNonceChecker($action, $name);
     }
 }
