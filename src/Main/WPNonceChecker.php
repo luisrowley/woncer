@@ -47,7 +47,7 @@ class WPNonceChecker extends WPNonce
      *
      * @return bool $result | Whether the nonce is valid or not
      */
-    private function checkAdminReferer(
+    public function checkAdminReferer(
         string $action = null,
         string $queryArg = null
     ): bool {
@@ -73,7 +73,7 @@ class WPNonceChecker extends WPNonce
      *
      * @return bool $result | `true` if check passes or `false` if check fails
      */
-    private function checkAjaxReferer(
+    public function checkAjaxReferer(
         string $action = null,
         string $queryArg = null,
         bool $die = true

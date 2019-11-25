@@ -25,7 +25,8 @@ class WPNonceCheckerTest extends TestCase
         MonkeyFunctions\expect(WPNonceChecker::CREATE_NONCE_FUNCTION_NAME)
             ->once();
         $WPNonceChecker = $WPNonceFactory->createDefaultChecker();
-        
+        $result = $WPNonceChecker->checkAdminReferer();
+        $this->assertEmpty($result);
     }
 
     public function testVerifyNonce() {
