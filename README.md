@@ -72,7 +72,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Luis De Benito** - *Find me on github as* [luisrowley](https://github.com/luisrowley)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
@@ -80,8 +80,8 @@ See also the list of [contributors](https://github.com/your/project/contributors
 
 This project is licensed under the **GPLv3 License** - see the [LICENSE.md](LICENSE.md) file for details
 
-## Acknowledgments
+## Caveats
 
-* Hat tip to anyone whose code was used
-* Inspiration
+* The tough part was
+* ...
 * etc

@@ -17,6 +17,6 @@ Woncer - Composer Package for the Wordpress Nonce API.
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 Woncer  Copyright (C) 2019  Luis De Benito
-    This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
+    This program comes with ABSOLUTELY NO WARRANTY;
     This is free software, and you are welcome to redistribute it
-    under certain conditions; type `show c' for details.
+    under certain conditions;
