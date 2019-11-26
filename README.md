@@ -4,37 +4,46 @@
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
-For this package to properly run, you'll need:
+For this package to properly run, you'll need **PHP 7.0** as a minimum:
 
 ```
 "php": "^7.0"
 ```
 
+And **Composer** installed to the [latest version](https://getcomposer.org/download/)
+
+
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+Installation should be as smooth as: 
 
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
+ 1) Cloning this repository:
 
 ```
-until finished
+git clone https://luis_dbm@bitbucket.org/luis_dbm/woncer.git
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+ 2) Changing to project directory:
+
+```
+cd woncer
+```
+
+ 3) And installing the composer dependencies by running:
+
+```
+composer install
+```
+
+## How to use
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+This project has integrated the PHPUnit system to perform **unit tests** for all class methods on an individual basis. By employing this procedure, it guarantees that the resulting code is solid and secure, regardless the input values that you feed the functions with.
 
 ### Break down into end to end tests
 
@@ -52,23 +61,18 @@ Explain what these tests test and why
 Give an example
 ```
 
-## Deployment
+### Development Caveats
 
-Add additional notes about how to deploy this on a live system
+* The tough part was
+* ...
+* etc
+
 
 ## Built With
 
 * [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Authors
 
@@ -80,8 +84,3 @@ See also the list of [contributors](https://github.com/your/project/contributors
 
 This project is licensed under the **GPLv3 License** - see the [LICENSE.md](LICENSE.md) file for details
 
-## Caveats
-
-* The tough part was
-* ...
-* etc
