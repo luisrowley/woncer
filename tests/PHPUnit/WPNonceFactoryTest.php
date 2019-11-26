@@ -49,7 +49,6 @@ class WPNonceFactoryTest extends TestCase
 
         $this->assertSame($defaultAction, $WPNonceChecker->getAction());
         $this->assertSame($defaultName, $WPNonceChecker->getName());
-
     }
 
     
@@ -67,6 +66,7 @@ class WPNonceFactoryTest extends TestCase
 
         $this->assertSame($actionParam, $wpNonce->getAction());
         $this->assertSame($nameParam, $wpNonce->getName());
+        $this->assertNotEmpty($wpNonce->getNonceToken());
         $this->assertSame($tokenParam, $wpNonce->getNonceToken());
     }
 
@@ -85,6 +85,7 @@ class WPNonceFactoryTest extends TestCase
 
         $this->assertSame($actionParam, $wpNonceChecker->getAction());
         $this->assertSame($nameParam, $wpNonceChecker->getName());
+        $this->assertNotEmpty($wpNonceChecker->getNonceToken());
         $this->assertSame($tokenParam, $wpNonceChecker->getNonceToken());
     }
 }
