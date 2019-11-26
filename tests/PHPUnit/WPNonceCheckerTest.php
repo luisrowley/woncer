@@ -19,6 +19,19 @@ use luisdeb\Woncer\Main\WPNonceFactory;
  */
 class WPNonceCheckerTest extends TestCase
 {
+    /**
+     * Tests checkAdminReferer with all possible function outputs.
+     *
+     * covers @method WPNonceFactory::createDefaultChecker
+     * covers @method WPNonceChecker::__construct
+     * covers @method WPNonceChecker::setAction
+     * covers @method WPNonceChecker::setName
+     * covers @method WPNonceChecker::setNonceToken
+     * covers @method WPNonceChecker::createNonceToken
+     * covers @method WPNonceChecker::checkAdminReferer
+     * 
+     * @return void
+     */
     public function testCheckAdminReferer() {
 
         $WPNonceFactory = new WPNonceFactory();
@@ -62,6 +75,19 @@ class WPNonceCheckerTest extends TestCase
         $this->assertEquals($result, 2);
     }
 
+    /**
+     * Tests checkAjaxReferer with all possible function outputs.
+     *
+     * covers @method WPNonceFactory::createDefaultChecker
+     * covers @method WPNonceChecker::__construct
+     * covers @method WPNonceChecker::setAction
+     * covers @method WPNonceChecker::setName
+     * covers @method WPNonceChecker::setNonceToken
+     * covers @method WPNonceChecker::createNonceToken
+     * covers @method WPNonceChecker::checkAjaxReferer
+     * 
+     * @return void
+     */
     public function testCheckAjaxReferer() {
 
         $WPNonceFactory = new WPNonceFactory();
@@ -105,6 +131,19 @@ class WPNonceCheckerTest extends TestCase
         $this->assertEquals($result, 2);
     }
 
+    /**
+     * Tests verifyNonce with all possible function outputs.
+     *
+     * covers @method WPNonceFactory::createDefaultChecker
+     * covers @method WPNonceChecker::__construct
+     * covers @method WPNonceChecker::setAction
+     * covers @method WPNonceChecker::setName
+     * covers @method WPNonceChecker::setNonceToken
+     * covers @method WPNonceChecker::createNonceToken
+     * covers @method WPNonceChecker::verifyNonce
+     * 
+     * @return void
+     */
     public function testVerifyNonce() {
 
         $sampleToken = "mySampleToken";
