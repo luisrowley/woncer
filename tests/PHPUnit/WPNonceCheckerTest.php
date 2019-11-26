@@ -11,7 +11,7 @@ use luisdeb\Woncer\Main\WPNonceChecker;
 use luisdeb\Woncer\Main\WPNonceFactory;
 
 /**
- * This class Implements the Unit Test methodology for WPNonceChecker class.
+ * This class implements the Unit Test methodology for WPNonceChecker class.
  *
  * PHPUnit version 8.0 * 
  * @link https://phpunit.de/getting-started/phpunit-8.html
