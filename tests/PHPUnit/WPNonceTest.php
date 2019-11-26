@@ -27,6 +27,7 @@ class WPNonceTest extends TestCase
      * covers @method WPNonce::setAction
      * covers @method WPNonce::setName
      * covers @method WPNonce::setNonceToken
+     * covers @method WPNonce::createNonceToken
      * covers @method WPNonce::addNonceUrl
      * 
      * @return void
@@ -49,6 +50,14 @@ class WPNonceTest extends TestCase
     /**
      * Tests WPNonce::addNonceToForm() method.
      *
+     * covers @method WPNonceFactory::createDefault
+     * covers @method WPNonce::__construct
+     * covers @method WPNonce::setAction
+     * covers @method WPNonce::setName
+     * covers @method WPNonce::setNonceToken
+     * covers @method WPNonce::createNonceToken
+     * covers @method WPNonce::addNonceToForm
+     * 
      * @return void
      */
     public function testForm() {
