@@ -31,10 +31,10 @@ class WPNonceFactory
      *
      * @return WPNonce
      */
-    public static function createDefault(): WPNonce
-    {
-        $action = self::DEFAULT_NONCE_ACTION;
-        $name = self::DEFAULT_NONCE_NAME;
+    public static function createDefault(
+        string $action = self::DEFAULT_NONCE_ACTION,
+        string $name = self::DEFAULT_NONCE_NAME
+    ): WPNonce {
 
         return new WPNonce($action, $name);
     }
@@ -44,10 +44,10 @@ class WPNonceFactory
      *
      * @return WPNonceChecker
      */
-    public static function createDefaultChecker(): WPNonceChecker
-    {
-        $action = (string)self::DEFAULT_NONCE_ACTION;
-        $name = self::DEFAULT_NONCE_NAME;
+    public static function createDefaultChecker(
+        string $action = self::DEFAULT_NONCE_ACTION,
+        string $name = self::DEFAULT_NONCE_NAME
+    ): WPNonceChecker {
 
         return new WPNonceChecker($action, $name);
     }

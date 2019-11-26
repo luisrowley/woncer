@@ -54,14 +54,14 @@ class WPNonce implements WPNonceInterface
      *
      * @var string|int $action
      */
-    public $action;
+    private $action;
 
     /**
      * The name value for the nonce.
      *
      * @var string $name
      */
-    public $name;
+    private $name;
 
     /**
      * One-time cryptographic hash to verify any user, user session and action.
@@ -120,6 +120,36 @@ class WPNonce implements WPNonceInterface
     private function setNonceToken(string $action)
     {
         $this->token = $this->createNonceToken($action);
+    }
+
+    /**
+     * Getter method for the `$action` private property.
+     *
+     * @return string $this->action | the nonce action.
+     */
+    public function getAction(): string
+    {
+        return $this->action;
+    }
+
+    /**
+     * Getter method for the `$name` private property.
+     *
+     * @return string $this->name | the nonce name.
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * Getter method for the `$token` private property.
+     *
+     * @return string $this->token | the nonce token.
+     */
+    public function getNonceToken(): string
+    {
+        return $this->token;
     }
 
     /**
