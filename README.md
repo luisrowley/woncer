@@ -27,7 +27,7 @@ Installation should be as smooth as:
 git clone https://luis_dbm@bitbucket.org/luis_dbm/woncer.git
 ```
 
- 2) Changing to project directory:
+ 2) Changing to the project directory:
 
 ```
 cd woncer
@@ -41,11 +41,17 @@ composer install
 
 ## How to use
 
+The logic behind this API is divided in two main Classes: **WPNonce** and **WPNonceChecker**.
+
+### WPNonce functions
+
+
+
 ## Running the tests
 
-This project has integrated the PHPUnit system to perform **unit tests** for all class methods on an individual basis. By employing this procedure, it guarantees that the resulting code is solid and secure, regardless the input values that you feed the functions with.
+This project has integrated the [PHPUnit](https://phpunit.de/) framework to perform **unit tests** for all class methods on an individual basis. By employing this procedure, it guarantees that the resulting code is solid and secure, regardless the input values that you feed the functions with.
 
-### Break down into end to end tests
+### Performing PHPUnit tests
 
 Explain what these tests test and why
 
