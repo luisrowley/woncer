@@ -127,7 +127,7 @@ class WPNonce implements WPNonceInterface
      *
      * @return string $this->action | the nonce action.
      */
-    public function getAction(): string
+    public function action(): string
     {
         return $this->action;
     }
@@ -137,7 +137,7 @@ class WPNonce implements WPNonceInterface
      *
      * @return string $this->name | the nonce name.
      */
-    public function getName(): string
+    public function name(): string
     {
         return $this->name;
     }
@@ -147,7 +147,7 @@ class WPNonce implements WPNonceInterface
      *
      * @return string $this->token | the nonce token.
      */
-    public function getNonceToken(): string
+    public function token(): string
     {
         return $this->token;
     }

@@ -51,9 +51,9 @@ class WPNonceFactoryTest extends TestCase
         $this->assertInstanceOf(WPNonce::class, $wpNonce);
         $this->assertClassHasAttribute('action', WPNonce::class);
 
-        $this->assertSame($defaultAction, $wpNonce->getAction());
-        $this->assertSame($defaultName, $wpNonce->getName());
-        $this->assertSame($tokenParam, $wpNonce->getNonceToken());
+        $this->assertSame($defaultAction, $wpNonce->action());
+        $this->assertSame($defaultName, $wpNonce->name());
+        $this->assertSame($tokenParam, $wpNonce->token());
     }
 
     /**
@@ -85,9 +85,9 @@ class WPNonceFactoryTest extends TestCase
 
         $this->assertInstanceOf(WPNonceChecker::class, $WPNonceChecker);
 
-        $this->assertSame($defaultAction, $WPNonceChecker->getAction());
-        $this->assertSame($defaultName, $WPNonceChecker->getName());
-        $this->assertSame($tokenParam, $WPNonceChecker->getNonceToken());
+        $this->assertSame($defaultAction, $WPNonceChecker->action());
+        $this->assertSame($defaultName, $WPNonceChecker->name());
+        $this->assertSame($tokenParam, $WPNonceChecker->token());
     }
 
     /**
@@ -115,10 +115,10 @@ class WPNonceFactoryTest extends TestCase
 
         $wpNonce = $wpNonceFactory->createDefault($actionParam, $nameParam);
 
-        $this->assertSame($actionParam, $wpNonce->getAction());
-        $this->assertSame($nameParam, $wpNonce->getName());
-        $this->assertNotEmpty($wpNonce->getNonceToken());
-        $this->assertSame($tokenParam, $wpNonce->getNonceToken());
+        $this->assertSame($actionParam, $wpNonce->action());
+        $this->assertSame($nameParam, $wpNonce->name());
+        $this->assertNotEmpty($wpNonce->token());
+        $this->assertSame($tokenParam, $wpNonce->token());
     }
 
     /**
@@ -146,10 +146,10 @@ class WPNonceFactoryTest extends TestCase
 
         $wpNonceChecker = $wpNonceFactory->createDefaultChecker($actionParam, $nameParam);
 
-        $this->assertSame($actionParam, $wpNonceChecker->getAction());
-        $this->assertSame($nameParam, $wpNonceChecker->getName());
-        $this->assertNotEmpty($wpNonceChecker->getNonceToken());
-        $this->assertSame($tokenParam, $wpNonceChecker->getNonceToken());
+        $this->assertSame($actionParam, $wpNonceChecker->action());
+        $this->assertSame($nameParam, $wpNonceChecker->name());
+        $this->assertNotEmpty($wpNonceChecker->token());
+        $this->assertSame($tokenParam, $wpNonceChecker->token());
     }
 
     /**
@@ -177,8 +177,8 @@ class WPNonceFactoryTest extends TestCase
 
         $wpNonce = $wpNonceFactory->createDefault($actionParam, $nameParam);
 
-        $this->assertSame($wpNonceFactory::DEFAULT_NONCE_ACTION, $wpNonce->getAction());
-        $this->assertSame($wpNonceFactory::DEFAULT_NONCE_NAME, $wpNonce->getName());
+        $this->assertSame($wpNonceFactory::DEFAULT_NONCE_ACTION, $wpNonce->action());
+        $this->assertSame($wpNonceFactory::DEFAULT_NONCE_NAME, $wpNonce->name());
     }
 
     /**
@@ -206,7 +206,7 @@ class WPNonceFactoryTest extends TestCase
 
         $wpNonceChecker = $wpNonceFactory->createDefaultChecker($actionParam, $nameParam);
 
-        $this->assertSame($wpNonceFactory::DEFAULT_NONCE_ACTION, $wpNonceChecker->getAction());
-        $this->assertSame($wpNonceFactory::DEFAULT_NONCE_NAME, $wpNonceChecker->getName());
+        $this->assertSame($wpNonceFactory::DEFAULT_NONCE_ACTION, $wpNonceChecker->action());
+        $this->assertSame($wpNonceFactory::DEFAULT_NONCE_NAME, $wpNonceChecker->name());
     }
 }
