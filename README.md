@@ -1,6 +1,6 @@
 # Woncer
 
-Woncer is a Composer package that serves as a toolbox for WordPress Nonces. It aims to provide with an Object-Oriented API to help you implement the most common functions for creating and validating tokens in a secure way.
+**Woncer** is a Composer package that serves as a toolbox for [WordPress Nonces](https://codex.wordpress.org/Wordpress_Nonce_Implementation). It aims to provide a developer-friendly API to help you implement the most common functions for creating and validating tokens in a secure way. All the logic has been restructured to follow an Object-Oriented approach that builds upon the original Wordpress functions.
 
 ## Getting Started
 
@@ -8,10 +8,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+For this package to properly run, you'll need:
 
 ```
-Give examples
+"php": "^7.0"
 ```
 
 ### Installing
