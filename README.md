@@ -2,9 +2,13 @@
 
 **Woncer** is a Composer package that serves as a toolbox for [WordPress Nonces](https://codex.wordpress.org/Wordpress_Nonce_Implementation). It aims to provide a developer-friendly API to help you implement the most common functions for creating and validating tokens in a secure way. All the logic has been restructured to follow an Object-Oriented approach that builds upon the original Wordpress functions.
 
+
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+
 
 ### Prerequisites
 
@@ -15,6 +19,7 @@ For this package to properly run, you'll need **PHP 7.0** as a minimum:
 ```
 
 And **Composer** installed to the [latest version](https://getcomposer.org/download/)
+
 
 
 ### Installing
@@ -39,14 +44,19 @@ cd woncer
 composer install
 ```
 
+
+
 ## How to use
 
 The logic behind this API is divided in two main Classes: **WPNonce** and **WPNonceChecker**.
 
+
+
+
 ### WPNonce functions
 
 ```
-WPNonce($action, $name)
+WPNonce ( string $action, string $name )
 ```
 
 **WPNonce** handles the functions to create a new Nonce token, and optionally adding it as a query string inside a URL, a hidden form field, or any other custom context if required.
@@ -61,7 +71,7 @@ Upon creation, it will call the [wp_create_nonce](https://developer.wordpress.or
 #### Adding nonce to URL
 
 ```
-WPNonce::addNonceUrl ( string $actionUrl [, string $action, string $name] )
+WPNonce::addNonceUrl ( string $actionUrl [, string $action, string $name ] )
 ```
 
 **WPNonce::addNonceUrl** receives an URL as input and returns the same URL with a Nonce token value attached to it. This URL always refer to a specific _action_ and if no _action_ is provided it will resort to the _default action_ value.
@@ -76,7 +86,7 @@ Defaults are supported for the optional parameters as per the [official docs](ht
 #### Adding nonce to Form
 
 ```
-WPNonce::addNonceToForm ( [string $action, string $name, bool $referer, bool $echo] )
+WPNonce::addNonceToForm ( [ string $action, string $name, bool $referer, bool $echo ] )
 ```
 
 **WPNonce::addNonceToForm** returns or displays the nonce hidden form field. This form field is attached to a given form to guarantee its legitimacy, proving that the contents of the form request came from the current site and not from somewhere else. It internally calls the Wordpress [wp_nonce_field](https://codex.wordpress.org/Function_Reference/wp_nonce_field) function to get the nonce field.
@@ -100,10 +110,13 @@ Following the [official implementation](https://developer.wordpress.org/referenc
 
  1. `$action` the nonce field context.
 
+
+
+
 ### WPNonceChecker functions
 
 ```
-WPNonceChecker($action, $name)
+WPNonceChecker ( string $action, string $name )
 ```
 
 **WPNonceChecker** is a child class of _WPNonce_. It inherits its properties and its main purpose is to validate any given Nonce token comming from a set of different possible contexts.
@@ -113,11 +126,81 @@ As a subclass of _WPNonce_ it requires the same parameters for initialization:
  1. An action, representing the context in which the nonce is created.
  2. A name for the nonce token.
 
+
 #### Validating a nonce from an admin screen
 
-**WPNonceChecker::** it is of paramount importance to be able to to securely 
+```
+WPNonceChecker::checkAdminReferer ( [ $action, $queryArg ] )
+```
+
+**WPNonceChecker::checkAdminReferer** tests if the nonce is valid or if the request was referred from an admin screen. It will return a boolean _true_ in case you call the function with empty parameters and the request was referred from a Wordpress administration screen. In case you provide it with both parameters, the nonce sent must be valid.
+
+Parameters are all OPTIONAL:
+
+ 1. `$action` the nonce field context.
+ 2. `$queryArg` Where to look for nonce in $_REQUEST global variable.
+
+
+ #### Validating a nonce from an AJAX request
+
+```
+WPNonceChecker::checkAjaxReferer( [ string $action, string $queryArg, bool $die ] )
+```
+
+**WPNonceChecker::checkAjaxReferer** verifies the AJAX request to prevent any requests from unauthorized third-party sites. It returns a boolean _true_ if the parameter `$die` is set to false AND the check passes.
+
+Parameters are all OPTIONAL:
+
+ 1. `$action` the nonce field context.
+ 2. `$queryArg` Where to look for nonce in $_REQUEST global variable.
+ 3. `$die` whether to die if the nonce is invalid.
+
+
+ #### Verifying any other context
+
+```
+WPNonceChecker::verifyNonce( [ string $nonce, string $action ] )
+```
+
+**WPNonceChecker::verifyNonce** verifies the nonce passed in some other context. Think of this as the counterpart of the `ẀPNonce::createNonceToken` function but for verification purposes.
+
+It will return an `integer` that can be one of the following:
+
+ * value `0` if nonce is invalid.
+ * value `1` if nonce was generated in the past 12 hours or less.
+ * value `2` if nonce was generated between 12 and 24 hours ago.
+
+Parameters are:
+
+ 1. `$nonce` (_Required_) the nonce field context.
+ 2. `$action` (_Optional_) Where to look for nonce in $_REQUEST global variable.
+
+
 
 ### Using the Factory class
+
+The suggested architechture implements the **Factory Pattern** to create a class that initiates a new **WPNonce** or **WPNonceChecker** Object that can be easily used for testing purposes. These new Objects can be created either using the default values for `$action` and `$name`, or custom-made ones.
+
+To use this approach, you can create a new **WPNonceFactory** instance and make a call to its **createDefault** method:
+
+```
+$wpNonceFactory = new WPNonceFactory();
+
+$wpNonce = $wpNonceFactory->createDefault();
+```
+
+By calling the `createDefault()` method without parameters, _WPNonceFactory_ will create a new **WPNonce** instance class with the DEFAULT `$action` and `$name` properties.
+
+With this same technique, you can create an instance of the **WPNonceChecker** class:
+
+```
+$wpNonceFactory = new WPNonceFactory();
+
+$wpNonceChecker = $wpNonceFactory->createDefaultChecker();
+```
+
+Notice how this time, we are calling the `createDefaultChecker()` method, also with no parameters.
+
 
 ## Running the tests
 

@@ -41,7 +41,7 @@ class WPNonceChecker extends WPNonce
      * @see https://codex.wordpress.org/Function_Reference/check_admin_referer
      *
      * @param string $action    | the context for the referal.
-     * @param string $queryArg | Where to look for nonce in $_REQUEST global variable.
+     * @param string $queryArg  | Where to look for nonce in $_REQUEST global variable.
      *
      * @var string $nonceAction | takes the local action value in case $action is not set.
      *
@@ -68,7 +68,8 @@ class WPNonceChecker extends WPNonce
      * @see https://codex.wordpress.org/Function_Reference/check_ajax_referer
      *
      * @param string $action    | the context for the referal.
-     * @param string $queryArg | Where to look for nonce in $_REQUEST global variable.
+     * @param string $queryArg  | Where to look for nonce in $_REQUEST global variable.
+     * @param bool $die         | Whether to die if the nonce is invalid.
      *
      * @var string $nonceAction | takes the local action value in case $action is not set.
      *
@@ -93,10 +94,10 @@ class WPNonceChecker extends WPNonce
     /**
      * Verifies the nonce passed in some other context
      *
-     * @see https://codex.wordpress.org/Function_Reference/check_ajax_referer
+     * @see https://codex.wordpress.org/Function_Reference/wp_verify_nonce
      *
-     * @param string $action    | the context for the referal.
-     * @param string $queryArg | Where to look for nonce in $_REQUEST global variable.
+     * @param string $nonce     | the nonce to verify.
+     * @param string $action    | the context for the nonce.
      *
      * @var string $nonceAction | takes the local action value in case $action is not set.
      *
