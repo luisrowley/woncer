@@ -28,21 +28,21 @@ Installation should be as smooth as:
 
  1. Cloning this repository:
 
-```
-git clone https://luis_dbm@bitbucket.org/luis_dbm/woncer.git
-```
+    ```
+    git clone https://luis_dbm@bitbucket.org/luis_dbm/woncer.git
+    ```
 
  2. Changing to the project directory:
 
-```
-cd woncer
-```
+    ```
+    cd woncer
+    ```
 
  3. And installing the composer dependencies by running:
 
-```
-composer install
-```
+    ```
+    composer install
+    ```
 
 
 
