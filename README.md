@@ -45,7 +45,42 @@ The logic behind this API is divided in two main Classes: **WPNonce** and **WPNo
 
 ### WPNonce functions
 
+```
+WPNonce($action, $name)
+```
 
+**WPNonce** handles the functions to create a new Nonce token, and optionally adding it as a query string inside a URL, a hidden form field, or any other custom context if required.
+
+Any _Object instance_ will require two parameters: 
+
+    1) An action, representing the context in which the nonce is created.
+    2) A name for the nonce token.
+
+Upon creation, it will call the [wp_create_nonce](https://developer.wordpress.org/reference/functions/wp_create_nonce/) function to provide with an initial token value.
+
+##### Adding nonce to URL
+
+```
+WPNonce::addNonceUrl ( string $actionUrl [, string $action, string $name] )
+```
+
+**WPNonce::addNonceUrl** receives an URL as input and returns the same URL with a Nonce token value attached to it. This URL always refer to a specific _action_ and if no _action_ is provided it will resort to the _default action_ value.
+
+Defaults are supported for the optional parameters as per the [official docs](https://codex.wordpress.org/Function_Reference/wp_nonce_url).
+
+
+##### Adding nonce to Form
+
+```
+WPNonce::addNonceToForm ( [string $action, string $name, bool $referer, bool $echo] )
+```
+
+**WPNonce::addNonceUrl**
+
+
+### WPNonceChecker functions
+
+### Using the Factory class
 
 ## Running the tests
 
@@ -82,9 +117,7 @@ Give an example
 
 ## Authors
 
-* **Luis De Benito** - *Find me on github as* [luisrowley](https://github.com/luisrowley)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* **Luis De Benito** -
 
 ## License
 
