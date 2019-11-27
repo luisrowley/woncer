@@ -2,7 +2,7 @@
     "name": "luisdeb/woncer",
     "description": "This library serves as a toolbox for WordPress Nonces in PHP. It implements all the required classes and methods to asses common Account Admin actions in a secure way.",
     "type": "library",
-    "license": "MIT",
+    "license": "GPLv3",
     "authors": [
         {
             "name": "Luis De Benito",

@@ -141,7 +141,7 @@ Parameters are all OPTIONAL:
  2. `$queryArg` Where to look for nonce in $_REQUEST global variable.
 
 
- #### Validating a nonce from an AJAX request
+#### Validating a nonce from an AJAX request
 
 ```
 WPNonceChecker::checkAjaxReferer( [ string $action, string $queryArg, bool $die ] )
@@ -156,7 +156,7 @@ Parameters are all OPTIONAL:
  3. `$die` whether to die if the nonce is invalid.
 
 
- #### Verifying any other context
+#### Verifying any other context
 
 ```
 WPNonceChecker::verifyNonce( [ string $nonce, string $action ] )
@@ -208,18 +208,27 @@ This project has integrated the [PHPUnit](https://phpunit.de/) framework to perf
 
 ### Performing PHPUnit tests
 
-Explain what these tests test and why
+To perform a test for a file using PHPUnit, simply run:
 
 ```
-Give an example
+./vendor/bin/phpunit < ./path/to/file >
 ```
 
-### And coding style tests
 
-Explain what these tests test and why
+For example, in order to test the **WPNonce** class from the project folder you would run:
 
 ```
-Give an example
+./vendor/bin/phpunit ./tests/PHPUnit/WPNonceTest.php
+```
+
+### Testing coding format standards
+
+All the code from this library was designed to comply with the famous [php_codesniffer](https://packagist.org/packages/squizlabs/php_codesniffer) coding style.
+
+In order to check that all files complies to this, you can simply run:
+
+```
+./vendor/bin/phpcs
 ```
 
 ### Development Caveats
@@ -228,18 +237,22 @@ Give an example
 
 * On top of this Parent/Child relationship, I added an *Interface* (**WPNonceInterface**) to be implemented by the main **WPNonce** class for consistency purposes. This is to ensure that the class definition meets the minimum expected API methods.
 
-* Strinct typing PHP mode is activated. This posed a challenge...
+* Strinct typing PHP mode is activated. This posed a challenge given that 
 
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [PHP7](https://www.php.net/releases/7_0_0.php)
+* [Composer](https://getcomposer.org/) - PHP Dependency Manager
+* [PHPUnit 8](https://phpunit.de/getting-started/phpunit-8.html) - Testing framework for PHP
+* [Brain Monkey](https://brain-wp.github.io/BrainMonkey/docs/what-and-why.html) - Utility for mocking PHP functions
+* [PHP_CodeSniffer](https://packagist.org/packages/squizlabs/php_codesniffer) - Coding style checker
+* [PSR-4](https://www.php-fig.org/psr/psr-4/) - Specification for autoloading classes
+* [Git](https://git-scm.com/) - version-control system
 
 ## Authors
 
-* **Luis De Benito** -
+* **Luis De Benito** 
 
 ## License
 
