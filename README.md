@@ -115,7 +115,7 @@ As a subclass of _WPNonce_ it requires the same parameters for initialization:
 
 #### Validating a nonce from an admin screen
 
-
+**WPNonceChecker::** it is of paramount importance to be able to to securely 
 
 ### Using the Factory class
 
