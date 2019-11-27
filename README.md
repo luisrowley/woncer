@@ -237,7 +237,9 @@ In order to check that all files complies to this, you can simply run:
 
 * On top of this Parent/Child relationship, I added an *Interface* (**WPNonceInterface**) to be implemented by the main **WPNonce** class for consistency purposes. This is to ensure that the class definition meets the minimum expected API methods.
 
-* Strinct typing PHP mode is activated. This posed a challenge given that 
+* Strict typing PHP mode must be activated. This posed a challenge given that some original WP functions expect their `$action` parameter to be either type `int` (**-1** for the default case) OR `string`. In practice, using Strict Types you can't declare a Scalar variable which can expect multiple types. That is why this default `int` type should be converted to `string` for consistency with any other non-default `$action` provided by the user.
+
+* Finding a way to call the original Wordpress functions without being implemented. Finally I opted for [Brain Monkey](https://brain-wp.github.io/BrainMonkey/docs/what-and-why.html) for mocking and testing the functions in an 'unit test' fashion. 
 
 
 ## Built With
