@@ -50,16 +50,16 @@ class WPNonceChecker extends WPNonce
     public function checkAdminReferer(
         string $action = null,
         string $queryArg = null
-    ): int {
+    ): bool {
 
-        $result = 0;
+        $result = false;
         $nonceAction = (!$action) ? $this->action() : $action;
 
         if (function_exists(self::CHECK_ADMIN_REFERER_FUNCTION_NAME)) {
             $result = check_admin_referer($nonceAction, $queryArg);
         }
 
-        return (!$result) ? 0 : $result;
+        return $result;
     }
 
     /**
@@ -78,16 +78,16 @@ class WPNonceChecker extends WPNonce
         string $action = null,
         string $queryArg = null,
         bool $die = true
-    ): int {
+    ): bool {
 
-        $result = 0;
+        $result = false;
         $nonceAction = (!$action) ? $this->action() : $action;
 
         if (function_exists(self::CHECK_AJAX_REFERER_FUNCTION_NAME)) {
             $result = check_ajax_referer($nonceAction, $queryArg, $die);
         }
 
-        return (!$result) ? 0 : $result;
+        return $result;
     }
 
     /**
