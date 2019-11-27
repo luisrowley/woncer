@@ -88,7 +88,34 @@ All parameters are optional:
  3. `$referer` to specify whether the referer hidden form field should also be created. (Default: true)
  4. `$echo` whether to display or not the hidden fields. (Default: true)
 
+#### Creating a Nonce for any other context
+
+```
+WPNonce::createNonceToken ( string $action )
+```
+
+**WPNonce::createNonceToken** function is called automatically every time you create a new _WPNonce_ object instance, for consistency purposes. Nonetheless, you can also call it manually whenever needed in order to generate a new Nonce token hash value to fit any custom context.
+
+Following the [official implementation](https://developer.wordpress.org/reference/functions/wp_create_nonce/), it only takes one required _action_ parameter:
+
+ 1. `$action` the nonce field context.
+
 ### WPNonceChecker functions
+
+```
+WPNonceChecker($action, $name)
+```
+
+**WPNonceChecker** is a child class of _WPNonce_. It inherits its properties and its main purpose is to validate any given Nonce token comming from a set of different possible contexts.
+
+As a subclass of _WPNonce_ it requires the same parameters for initialization:
+
+ 1. An action, representing the context in which the nonce is created.
+ 2. A name for the nonce token.
+
+#### Validating a nonce from an admin screen
+
+
 
 ### Using the Factory class
 
@@ -114,9 +141,11 @@ Give an example
 
 ### Development Caveats
 
-* The tough part was
-* ...
-* etc
+* The logic behind defining **WPNonceChecker** a subclass of **WPNonce** is that the former will need the properties (_action, name, token_) provided by the latter in order for the verification process to work. Also the _inheritance_ approach allows to apply the DRY (*D*on't *R*epeat *Y*ourself) principle to our code base for shared properties and common methods between these classes.
+
+* On top of this Parent/Child relationship, I added an *Interface* (**WPNonceInterface**) to be implemented by the main **WPNonce** class for consistency purposes. This is to ensure that the class definition meets the minimum expected API methods.
+
+* Strinct typing PHP mode is activated. This posed a challenge...
 
 
 ## Built With
