@@ -53,12 +53,12 @@ WPNonce($action, $name)
 
 Any _Object instance_ will require two parameters: 
 
-    1) An action, representing the context in which the nonce is created.
-    2) A name for the nonce token.
+ 1) An action, representing the context in which the nonce is created.
+ 2) A name for the nonce token.
 
 Upon creation, it will call the [wp_create_nonce](https://developer.wordpress.org/reference/functions/wp_create_nonce/) function to provide with an initial token value.
 
-##### Adding nonce to URL
+#### Adding nonce to URL
 
 ```
 WPNonce::addNonceUrl ( string $actionUrl [, string $action, string $name] )
@@ -69,7 +69,7 @@ WPNonce::addNonceUrl ( string $actionUrl [, string $action, string $name] )
 Defaults are supported for the optional parameters as per the [official docs](https://codex.wordpress.org/Function_Reference/wp_nonce_url).
 
 
-##### Adding nonce to Form
+#### Adding nonce to Form
 
 ```
 WPNonce::addNonceToForm ( [string $action, string $name, bool $referer, bool $echo] )
