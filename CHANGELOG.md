@@ -10,6 +10,8 @@
 
  3. The interface structure needed to be redefined to better reflect the new classes.
 
+ 4.  No code (or documentation) existed to fetch and initialize a nonce from request data.
+
 **Implemented enhancements:**
 
 1. Instead of building a parent/child relationship between these two classes (`WPNonce` and `WPNonceChecker`), a better solution was to implement a "top-level" abstract class called `WPNonceAbstract` with the main Nonce definition. This abstract class will be implemented by any of the classes which may need a basic Nonce definition to properly work.
@@ -22,6 +24,9 @@
 | Class                 | Interface               |
 |:---------------------:|:-----------------------:|
 | WPNonceAbstract       | WPNonceInterface        |
+
+
+4. New logic was created in `WPNonceAbstract` to verify the Nonce context based on HTTP request. This can be implemented both by Nonce "Creator" classes and by the Nonce "Checker" class.
 
 
 **Architechture overview**
