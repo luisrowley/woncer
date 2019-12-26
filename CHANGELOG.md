@@ -4,13 +4,14 @@
 
 **Fixed bugs:**
 
- 1. Inheritance: Fixed the "decoupling" problem between the `WPNonceChecker` (nonce validation class) and its parent class `WPNonce` (main nonce class definition).
+1. Inheritance: Fixed the "decoupling" problem between the `WPNonceChecker` (nonce validation class) and its parent class `WPNonce` (main nonce class definition).
 
- 2. In the previous version, all the Nonce creation logic was centralized in the `WPNonce` class, which made the structure very rigid and was lacking modularity.
+2. In the previous version, all the Nonce creation logic was centralized in the `WPNonce` class, which made the structure very rigid and was lacking modularity.
 
- 3. The interface structure needed to be redefined to better reflect the new classes.
+3. No code (or documentation) existed to fetch and initialize a nonce from request data.
 
- 4.  No code (or documentation) existed to fetch and initialize a nonce from request data.
+4. The interface structure needed to be redefined to better reflect the new classes.
+
 
 **Implemented enhancements:**
 
@@ -18,7 +19,9 @@
 
 2. The solution was to implement a separate class for each different context: `WPNonceDefaultCreator`, `WPNonceURLCreator` and `WPNonceFieldCreator`.
 
-3. A new interface definition was placed on top of `WPNonceAbstract` to comply with the structural requirements for a basic Nonce implementation.
+3. New logic was created in `WPNonceAbstract` to verify the Nonce context based on HTTP request. This can be implemented both by Nonce "Creator" classes and by the Nonce "Checker" class.
+
+4. A new interface definition was placed on top of `WPNonceAbstract` to comply with the structural requirements for a basic Nonce implementation.
 
 
 | Class                 | Interface               |
@@ -26,7 +29,7 @@
 | WPNonceAbstract       | WPNonceInterface        |
 
 
-4. New logic was created in `WPNonceAbstract` to verify the Nonce context based on HTTP request. This can be implemented both by Nonce "Creator" classes and by the Nonce "Checker" class.
+
 
 
 **Architechture overview**
