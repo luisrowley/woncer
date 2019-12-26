@@ -8,7 +8,7 @@
 
  2. In the previous version, all the Nonce creation logic was centralized in the `WPNonce` class, which made the structure very rigid and was lacking modularity.
 
- 3. The whole interface architecture needed to be redefined to follow the new class segmentation.
+ 3. The interface structure needed to be redefined to better reflect the new classes.
 
 **Implemented enhancements:**
 
@@ -16,17 +16,16 @@
 
 2. The solution was to implement a separate class for each different context: `WPNonceDefaultCreator`, `WPNonceURLCreator` and `WPNonceFieldCreator`.
 
-3. The `WPNonceInterface` was replaced by a new set of interfaces, matching the new class structure accordingly: `DefaultCreatorInterface`, `URLCreatorInterface` and `FieldCreatorInterface` for the "creator classes". 
+3. A new interface definition was placed on top of `WPNonceAbstract` to comply with the structural requirements for a basic Nonce implementation.
+
 
 | Class                 | Interface               |
 |:---------------------:|:-----------------------:|
-| WPNonceDefaultCreator | DefaultCreatorInterface |
-| WPNonceURLCreator     | URLCreatorInterface     |
-| WPNonceFieldCreator   | FieldCreatorInterface   |
+| WPNonceAbstract       | WPNonceInterface        |
 
 
-And `CheckerInterface` for `WPNonceChecker` class:
+**Architechture overview**
 
-| Class                 | Interface               |
-|:---------------------:|:-----------------------:|
-| WPNonceChecker        | CheckerInterface        |
+Here you can find a summary of the structure mentioned above:
+
+![picture](misc/api-class-structure.png)
