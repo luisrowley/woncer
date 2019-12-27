@@ -4,72 +4,18 @@ declare(strict_types=1);
 
 namespace luisdeb\Woncer\Main;
 
-use luisdeb\Woncer\Interfaces\WPNonceInterface as WPNonceInterface;
+use luisdeb\Woncer\Main\WPNonceCreator as WPNonceCreator;
 
 /**
- * This class handles the logic to generate new WordPress Nonces.
- * It implements original WordPress funtions as per the doc files.
+ * Handles Nonce creation as a URL query parameter.
+ * It implements the original wp_nonce_url function logic.
+ * 
+ * @see https://developer.wordpress.org/reference/functions/wp_nonce_url/
  *
- * @see https://codex.wordpress.org/Wordpress_Nonce_Implementation
+ * @since v0.0.2
  */
-class WPNonce implements WPNonceInterface
+class WPNonceURLCreator extends WPNonceCreator
 {
-    /**
-     * The current WordPress `create nonce function name`.
-     *
-     * @var string CREATE_NONCE_FUNCTION_NAME
-     */
-    const CREATE_NONCE_FUNCTION_NAME = 'wp_create_nonce';
-
-    /**
-     * The current WordPress `nonce URL function name`.
-     *
-     * @var string NONCE_URL_FUNCTION_NAME
-     */
-    const NONCE_URL_FUNCTION_NAME = 'wp_nonce_url';
-
-    /**
-     * The current WordPress `nonce field function name`.
-     *
-     * @var string NONCE_FIELD_FUNCTION_NAME
-     */
-    const NONCE_FIELD_FUNCTION_NAME = 'wp_nonce_field';
-
-    /**
-     * Default action.
-     *
-     * @var int DEFAULT_NONCE_ACTION
-     */
-    const DEFAULT_NONCE_ACTION = '-1';
-
-    /**
-     * The current WordPress `default nonce name`.
-     *
-     * @var string NONCE_FIELD_FUNCTION_NAME
-     */
-    const DEFAULT_NONCE_NAME = '_wpnonce';
-
-    /**
-     * Value to represent the context for a nonce.
-     *
-     * @var string|int $action
-     */
-    private $action;
-
-    /**
-     * The name value for the nonce.
-     *
-     * @var string $name
-     */
-    private $name;
-
-    /**
-     * One-time cryptographic hash to verify any user, user session and action.
-     *
-     * @var string $token
-     */
-    private $token;
-
     /**
      * Class constructor.
      * Initializes the action, name and token properties.

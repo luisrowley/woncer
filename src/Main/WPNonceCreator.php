@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace luisdeb\Woncer\Main;
 
-use luisdeb\Woncer\Main\WPNonce as WPNonceAbstract;
+use luisdeb\Woncer\Main\WPNonceAbstract as WPNonceAbstract;
 
 /**
  * This class handles the logic to generate new WordPress Nonces.
