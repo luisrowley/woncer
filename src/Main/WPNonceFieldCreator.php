@@ -4,72 +4,16 @@ declare(strict_types=1);
 
 namespace luisdeb\Woncer\Main;
 
-use luisdeb\Woncer\Interfaces\WPNonceInterface as WPNonceInterface;
+use luisdeb\Woncer\Main\WPNonceCreator as WPNonceCreator;
 
 /**
- * This class handles the logic to generate new WordPress Nonces.
- * It implements original WordPress funtions as per the doc files.
+ * This class adds a hidden nonce field to be sent alongside a form.
+ * It follows the original WordPress function implementation.
  *
  * @see https://codex.wordpress.org/Wordpress_Nonce_Implementation
  */
-class WPNonce implements WPNonceInterface
+class WPNonceFieldCreator extends WPNonceCreator
 {
-    /**
-     * The current WordPress `create nonce function name`.
-     *
-     * @var string CREATE_NONCE_FUNCTION_NAME
-     */
-    const CREATE_NONCE_FUNCTION_NAME = 'wp_create_nonce';
-
-    /**
-     * The current WordPress `nonce URL function name`.
-     *
-     * @var string NONCE_URL_FUNCTION_NAME
-     */
-    const NONCE_URL_FUNCTION_NAME = 'wp_nonce_url';
-
-    /**
-     * The current WordPress `nonce field function name`.
-     *
-     * @var string NONCE_FIELD_FUNCTION_NAME
-     */
-    const NONCE_FIELD_FUNCTION_NAME = 'wp_nonce_field';
-
-    /**
-     * Default action.
-     *
-     * @var int DEFAULT_NONCE_ACTION
-     */
-    const DEFAULT_NONCE_ACTION = '-1';
-
-    /**
-     * The current WordPress `default nonce name`.
-     *
-     * @var string NONCE_FIELD_FUNCTION_NAME
-     */
-    const DEFAULT_NONCE_NAME = '_wpnonce';
-
-    /**
-     * Value to represent the context for a nonce.
-     *
-     * @var string|int $action
-     */
-    private $action;
-
-    /**
-     * The name value for the nonce.
-     *
-     * @var string $name
-     */
-    private $name;
-
-    /**
-     * One-time cryptographic hash to verify any user, user session and action.
-     *
-     * @var string $token
-     */
-    private $token;
-
     /**
      * Class constructor.
      * Initializes the action, name and token properties.
@@ -79,128 +23,7 @@ class WPNonce implements WPNonceInterface
      */
     public function __construct(string $action, string $name)
     {
-        if (trim($action) === "") {
-            $action = self::DEFAULT_NONCE_ACTION;
-        }
-
-        if (trim($name) === "") {
-            $name = self::DEFAULT_NONCE_NAME;
-        }
-
-        $this->setAction($action);
-        $this->setName($name);
-        $this->setNonceToken($this->action);
-    }
-
-    /**
-     * Setter method for the `$action` private property.
-     *
-     * @param string $action | the nonce action.
-     */
-    private function setAction(string $action)
-    {
-        $this->action = $action;
-    }
-
-    /**
-     * Setter method for the `$name` private property.
-     *
-     * @param string $name | the nonce name.
-     */
-    private function setName(string $name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * Setter method for the `$token` private property.
-     *
-     * @param string $action | the nonce context.
-     */
-    private function setNonceToken(string $action)
-    {
-        $this->token = $this->createNonceToken($action);
-    }
-
-    /**
-     * Getter method for the `$action` private property.
-     *
-     * @return string $this->action | the nonce action.
-     */
-    public function action(): string
-    {
-        return $this->action;
-    }
-
-    /**
-     * Getter method for the `$name` private property.
-     *
-     * @return string $this->name | the nonce name.
-     */
-    public function name(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * Getter method for the `$token` private property.
-     *
-     * @return string $this->token | the nonce token.
-     */
-    public function token(): string
-    {
-        return $this->token;
-    }
-
-    /**
-     * Creates a new token tied to a specific action, user, user session, and window of time
-     *
-     * @see https://developer.wordpress.org/reference/functions/wp_create_nonce/
-     *
-     * @param string $action | the nonce context.
-     *
-     * @return string $result | the cryptographic token hash
-     */
-    public function createNonceToken(string $action): string
-    {
-        $result = "";
-
-        if (function_exists(self::CREATE_NONCE_FUNCTION_NAME)) {
-            $result = (string)wp_create_nonce($action);
-        }
-
-        return $result;
-    }
-
-    /**
-     * Retrieve URL with nonce added to URL query.
-     *
-     * @see https://developer.wordpress.org/reference/functions/wp_nonce_url/
-     *
-     * @param string $actionUrl | the URL to add nonce action.
-     * @param string $action    | the nonce action name.
-     * @param string $name      | nonce name.
-     *
-     * @var string $nonceAction | takes the local action value in case $action is not set.
-     * @var string $nonceName   | takes the local name value in case $name is not set.
-     *
-     * @return string $nonceUrl | the cryptographic token hash
-     */
-    public function addNonceUrl(
-        string $actionUrl,
-        string $action = null,
-        string $name = null
-    ): string {
-
-        $nonceUrl = "";
-        $nonceAction = (!$action) ? $this->action : $action;
-        $nonceName = (!$name) ? $this->name : $name;
-
-        if (function_exists(self::NONCE_URL_FUNCTION_NAME)) {
-            $nonceUrl = wp_nonce_url($actionUrl, $nonceAction, $nonceName);
-        }
-
-        return $nonceUrl;
+        parent::__construct($action, $name);
     }
 
     /**
@@ -225,12 +48,22 @@ class WPNonce implements WPNonceInterface
         bool $echo = true
     ): string {
 
-        $nonceField = "";
-        $nonceAction = (!$action) ? $this->action : $action;
-        $nonceName = (!$name) ? $this->name : $name;
+        $nonceAction = (!$action) ? $this->action() : $action;
+        $nonceName = (!$name) ? $this->name() : $name;
+        $nonceToken = $this->createNonceToken();
 
-        if (function_exists(self::NONCE_FIELD_FUNCTION_NAME)) {
-            $nonceField = wp_nonce_field($nonceAction, $nonceName, $referer, $echo);
+        $nonceField = sprintf(
+            '<input type="hidden" id="%1$s" name="%1$s" value="%2$s" />',
+            esc_attr($nonceName),
+            esc_attr($nonceToken)
+        );
+
+        if ($referer) {
+            $nonceField .= wp_referer_field(false);
+        }
+     
+        if ($echo) {
+            echo $nonceField;
         }
 
         return $nonceField;
