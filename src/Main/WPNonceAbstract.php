@@ -10,6 +10,8 @@ use luisdeb\Woncer\Interfaces\WPNonceInterface as WPNonceInterface;
  * Absctract class to provide with the basic Nonce Object structure.
  *
  * @see https://codex.wordpress.org/Wordpress_Nonce_Implementation
+ * 
+ * @since v0.0.2
  */
 abstract class WPNonceAbstract implements WPNonceInterface
 {
