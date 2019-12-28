@@ -22,7 +22,7 @@ class WPNonceCreator extends WPNonceAbstract
     const CREATE_NONCE_FUNCTION_NAME = 'wp_create_nonce';
     
     /**
-     * Class constructor.
+     * Class constructor covering basic parameters.
      * Initializes the action, name and token properties.
      *
      * @param string $action
