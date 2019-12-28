@@ -50,7 +50,7 @@ class WPNonceFieldCreator extends WPNonceCreator
 
         $nonceAction = (!$action) ? $this->action() : $action;
         $nonceName = (!$name) ? $this->name() : $name;
-        $nonceToken = $this->createNonceToken();
+        $nonceToken = $this->createNonceToken($nonceAction);
 
         $nonceField = sprintf(
             '<input type="hidden" id="%1$s" name="%1$s" value="%2$s" />',
