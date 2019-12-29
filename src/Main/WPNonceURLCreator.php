@@ -29,7 +29,8 @@ class WPNonceURLCreator extends WPNonceCreator
     }
 
     /**
-     * Retrieve URL with nonce added to URL query.
+     * Generates new URL with nonce added to input URL query 
+     * or an empty string if the input URL query is invalid.
      *
      * @see https://developer.wordpress.org/reference/functions/wp_nonce_url/
      *
@@ -48,12 +49,15 @@ class WPNonceURLCreator extends WPNonceCreator
         string $name = null
     ): string {
 
-        $actionUrl = str_replace( '&amp;', '&', $actionUrl );
+        $nonceUrl = "";
         $nonceAction = (!$action) ? $this->action : $action;
         $nonceName = (!$name) ? $this->name : $name;
-        $nonceToken = $this->createNonceToken($nonceAction);
 
-        $nonceUrl = esc_html(add_query_arg($nonceName, $nonceToken, $actionUrl));
+        if (filter_var($actionUrl, FILTER_VALIDATE_URL)) {
+            $actionUrl = str_replace( '&amp;', '&', $actionUrl );
+            $nonceToken = $this->createNonceToken($nonceAction);
+            $nonceUrl = esc_html(add_query_arg($nonceName, $nonceToken, $actionUrl));
+        }
 
         return $nonceUrl;
     }
