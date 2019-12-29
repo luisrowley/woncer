@@ -25,9 +25,16 @@ abstract class WPNonceAbstract implements WPNonceInterface
     /**
      * The current WordPress `default nonce name`.
      *
-     * @var string NONCE_FIELD_FUNCTION_NAME
+     * @var string DEFAULT_NONCE_NAME
      */
     const DEFAULT_NONCE_NAME = '_wpnonce';
+
+    /**
+     * The default lifetime for WordPress Nonces.
+     *
+     * @var int DEFAULT_LIFETIME
+     */
+    const DEFAULT_LIFETIME = 24 * 60 * 60;
 
     /**
      * Value to represent the context for a nonce.
@@ -44,6 +51,13 @@ abstract class WPNonceAbstract implements WPNonceInterface
     private $name;
 
     /**
+     * The lifetime for the nonce in seconds.
+     *
+     * @var int $time
+     */
+    private $time;
+
+    /**
      * One-time cryptographic hash to verify any user, user session and action.
      *
      * @var string $token
@@ -53,11 +67,12 @@ abstract class WPNonceAbstract implements WPNonceInterface
     /**
      * Class constructor.
      * Initializes the action, name and token properties.
+     * A custom lifetime can be set for the nonce. Default is 24 hours.
      *
      * @param string $action
      * @param string $name
      */
-    public function __construct(string $action, string $name)
+    public function __construct(string $action, string $name, int $time = DEFAULT_LIFETIME)
     {
         if (trim($action) === "") {
             $action = self::DEFAULT_NONCE_ACTION;
@@ -69,6 +84,7 @@ abstract class WPNonceAbstract implements WPNonceInterface
 
         $this->setAction($action);
         $this->setName($name);
+        $this->setTime($time);
         $this->setNonceToken($this->action);
     }
 
@@ -100,6 +116,16 @@ abstract class WPNonceAbstract implements WPNonceInterface
     private function setNonceToken(string $_token)
     {
         $this->token = $_token;
+    }
+
+    /**
+     * Setter method for the `$time` private property.
+     *
+     * @param string $time | the nonce lifetime.
+     */
+    private function setTime(string $_time)
+    {
+        $this->time = $_time;
     }
 
     /**

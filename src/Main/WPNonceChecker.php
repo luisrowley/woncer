@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace luisdeb\Woncer\Main;
 
-use luisdeb\Woncer\Main\WPNonce as WPNonce;
+use luisdeb\Woncer\Main\WPNonceAbstract as WPNonceAbstract;
 
 /**
- * This class handles the logic for Nonce verification.
- * It implements different methods depending on Nonce context.
+ * General-purpose Nonce verification class.
+ * It implements different verifier methods depending on Nonce context.
  *
  * @see https://codex.wordpress.org/Wordpress_Nonce_Implementation
  */
-class WPNonceChecker extends WPNonce
+class WPNonceChecker extends WPNonceAbstract
 {
     /**
      * The current WordPress `check admin referer function name`.
