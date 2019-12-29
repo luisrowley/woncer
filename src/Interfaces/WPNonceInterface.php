@@ -21,6 +21,13 @@ interface WPNonceInterface
     public function setName(string $_name);
 
     /**
+     * Setter method for the `$time` private property.
+     *
+     * @param string $time | the nonce lifetime.
+     */
+    public function setTime(string $_time);
+
+    /**
      * Setter method for the `$token` private property.
      *
      * @param string $action | the nonce context.
