@@ -109,16 +109,6 @@ abstract class WPNonceAbstract implements WPNonceInterface
     }
 
     /**
-     * Setter method for the `$token` private property.
-     *
-     * @param string $action | the nonce context.
-     */
-    private function setNonceToken(string $_token)
-    {
-        $this->token = $_token;
-    }
-
-    /**
      * Setter method for the `$time` private property.
      *
      * @param string $time | the nonce lifetime.
@@ -126,6 +116,16 @@ abstract class WPNonceAbstract implements WPNonceInterface
     private function setTime(string $_time)
     {
         $this->time = $_time;
+    }
+
+    /**
+     * Setter method for the `$token` private property.
+     *
+     * @param string $action | the nonce context.
+     */
+    private function setNonceToken(string $_token)
+    {
+        $this->token = $_token;
     }
 
     /**
