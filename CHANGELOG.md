@@ -19,7 +19,7 @@
 
 2. The solution was to implement a separate class for each different context: `WPNonceCreator` for a default context, `WPNonceURLCreator` to add the nonce as a URL parameter and `WPNonceFieldCreator` to append the nonce as a form field.
 
-3. New logic was created in `WPNonceAbstract` to verify the Nonce context based on HTTP request. This can be implemented both by Nonce "Creator" classes and by the Nonce "Checker" class.
+3. New logic was created in `ContextRequester` class to verify the Nonce context based on HTTP request. This can be implemented both by Nonce "Creator" classes and by the Nonce "Checker" class.
 
 4. A new interface definition was placed on top of `WPNonceAbstract` to comply with the structural requirements for a basic Nonce implementation.
 
