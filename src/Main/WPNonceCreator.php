@@ -54,4 +54,9 @@ class WPNonceCreator extends WPNonceAbstract
 
         return $result;
     }
+
+    public function createNonceFromRequest(string $action = null): string
+    {
+        
+    }
 }

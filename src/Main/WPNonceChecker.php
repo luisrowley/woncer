@@ -119,6 +119,8 @@ class WPNonceChecker extends WPNonceAbstract
         $result = 0;
         $nonceAction = (!$action) ? $this->action() : $action;
 
+        /* http request validation here */
+
         if (function_exists(self::VERIFY_NONCE_FUNCTION_NAME)) {
             $result = wp_verify_nonce($nonce, $nonceAction);
         }
