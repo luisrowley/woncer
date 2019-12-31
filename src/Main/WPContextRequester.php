@@ -5,28 +5,33 @@ declare(strict_types=1);
 namespace luisdeb\Woncer\Main;
 
 /**
- * General-purpose Nonce verification class.
- * It implements different verifier methods depending on Nonce context.
+ * Helper class to provide with HTTP context for a Nonce request.
  *
- * @see https://codex.wordpress.org/Wordpress_Nonce_Implementation
+ * @since v0.0.2
  */
-final class WPContextRequester
+final class WPContextRequester implements ArrayAccess
 {
     /**
      * The HTTP request data based on method.
      *
-     * @var int $time
+     * @var int $httpRequest
      */
-    private $httpRequest;
+    private $httpRequest = [];
 
-        /**
+    /**
      * Class constructor covering basic parameters.
      * Initializes the action, name and token properties.
      *
-     * @param string $action
-     * @param string $name
      */
     public function __construct()
     {
+        $inputMethod = filter_input(INPUT_SERVER, 'REQUEST_METHOD', FILTER_SANITIZE_SPECIAL_CHARS);
+        $httpMethod = !isset($inputMethod) ? null : $inputMethod;
     }
+
+    public function offsetExists($offset)
+    {
+        return isset($this->container[$offset]);
+    }
+
 }
