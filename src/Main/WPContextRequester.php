@@ -23,10 +23,17 @@ final class WPContextRequester implements ArrayAccess
      * Initializes the action, name and token properties.
      *
      */
-    public function __construct(array $httpRequest)
+    public function __construct()
     {
         $inputMethod = filter_input(INPUT_SERVER, 'REQUEST_METHOD', FILTER_SANITIZE_SPECIAL_CHARS);
         $httpMethod = !isset($inputMethod) ? null : $inputMethod;
+        
+        if(isset($httpMethod) && 
+        strtoupper($httpMethod) === 'GET' || 
+        strtoupper($httpMethod) === 'POST')
+        {
+            $this->httpRequest = array_merge($_GET, $_POST);
+        }
     }
 
     /**
@@ -63,5 +70,15 @@ final class WPContextRequester implements ArrayAccess
     public function offsetUnset($offset)
     {
         throw new Exception("Request parameters are immutable"); 
+    }
+
+    /**
+     * getter method for the http request associative array
+     * 
+     * @return the request array
+     */
+    public function httpRequest(): array
+    {
+        return $this->httpRequest;
     }
 }
