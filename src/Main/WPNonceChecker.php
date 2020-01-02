@@ -112,12 +112,12 @@ class WPNonceChecker extends WPNonceAbstract
      *
      */
     public function verifyNonce(
-        string $nonce,
-        string $action = null
+        ArrayAccess $httpContext
     ): int {
 
         $result = 0;
-        $nonceAction = (!$action) ? $this->action() : $action;
+        $nonceAction = $httpContext->offsetExists($this->action) ? $httpContext[$this->action] : '';
+        $requester = new WPContextRequester();
 
         /* http request validation here */
 
