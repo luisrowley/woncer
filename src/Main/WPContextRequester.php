@@ -23,7 +23,7 @@ final class WPContextRequester implements ArrayAccess
      * Initializes the action, name and token properties.
      *
      */
-    public function __construct()
+    public function __construct(array $httpRequest)
     {
         $inputMethod = filter_input(INPUT_SERVER, 'REQUEST_METHOD', FILTER_SANITIZE_SPECIAL_CHARS);
         $httpMethod = !isset($inputMethod) ? null : $inputMethod;
@@ -32,13 +32,15 @@ final class WPContextRequester implements ArrayAccess
     /**
      * {@inheritDoc} From ArrayAccess implementation 
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->httpRequest[$offset]);
     }
 
     /**
      * {@inheritDoc} From ArrayAccess implementation 
+     * 
+     * Offset getter method
      */
     public function offsetGet($offset)
     {
@@ -47,10 +49,12 @@ final class WPContextRequester implements ArrayAccess
 
     /**
      * {@inheritDoc} From ArrayAccess implementation 
+     * 
+     * Offset setter method is disabled for security reasons
      */
     public function offsetSet($offset, $value)
     {
-        $this->httpRequest[$offset] = $value;  
+        throw new Exception("Request parameters are immutable"); 
     }
 
     /**
@@ -58,6 +62,6 @@ final class WPContextRequester implements ArrayAccess
      */
     public function offsetUnset($offset)
     {
-        unset($this->httpRequest[$offset]);
+        throw new Exception("Request parameters are immutable"); 
     }
 }
