@@ -29,9 +29,23 @@ final class WPContextRequester implements ArrayAccess
         $httpMethod = !isset($inputMethod) ? null : $inputMethod;
     }
 
+    /**
+     * {@inheritDoc} From ArrayAccess implementation 
+     */
     public function offsetExists($offset)
     {
-        return isset($this->container[$offset]);
+        return isset($this->httpRequest[$offset]);
     }
 
+    /**
+     * {@inheritDoc} From ArrayAccess implementation 
+     */
+    public function offsetGet($offset)
+    {
+        return isset($this->httpRequest[$offset]) ? $this->httpRequest[$offset] : null;
+    }
+
+    /**
+     * {@inheritDoc} From ArrayAccess implementation 
+     */
 }
