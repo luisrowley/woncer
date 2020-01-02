@@ -48,4 +48,16 @@ final class WPContextRequester implements ArrayAccess
     /**
      * {@inheritDoc} From ArrayAccess implementation 
      */
+    public function offsetSet($offset, $value)
+    {
+        $this->httpRequest[$offset] = $value;  
+    }
+
+    /**
+     * {@inheritDoc} From ArrayAccess implementation 
+     */
+    public function offsetUnset($offset)
+    {
+        unset($this->httpRequest[$offset]);
+    }
 }
