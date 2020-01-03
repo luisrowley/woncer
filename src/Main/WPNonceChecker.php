@@ -36,6 +36,18 @@ class WPNonceChecker extends WPNonceAbstract
     const VERIFY_NONCE_FUNCTION_NAME = 'wp_verify_nonce';
 
     /**
+     * Class constructor covering basic parameters.
+     * Initializes the action, name and token properties.
+     *
+     * @param string $action
+     * @param string $name
+     */
+    public function __construct(string $action, string $name)
+    {
+        parent::__construct($action, $name);
+    }
+
+    /**
      * Verifies the nonce passed in some other context
      *
      * @see https://codex.wordpress.org/Function_Reference/wp_verify_nonce
