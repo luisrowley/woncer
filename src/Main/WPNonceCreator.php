@@ -55,8 +55,16 @@ class WPNonceCreator extends WPNonceAbstract
         return $result;
     }
 
-    public function createNonceFromRequest(string $action = null): string
+    public function createFromRequest(ArrayAccess $httpContext = null): string
     {
-        
+        $result = "";
+        $httpContext = (!$httpContext) ? new WPContextRequester() : $httpContext;
+        $nonceAction = $httpContext->offsetExists($this->action) ? $httpContext[$this->action] : '';
+
+        if (is_string($nonceAction)) {
+            $result = $this->createNonceToken($nonceAction);
+        }
+
+        return $result;
     }
 }
