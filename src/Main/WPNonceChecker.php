@@ -40,10 +40,11 @@ class WPNonceChecker extends WPNonceAbstract
      *
      * @see https://codex.wordpress.org/Function_Reference/wp_verify_nonce
      *
-     * @param string $nonce     | the nonce to verify.
-     * @param string $action    | the context for the nonce.
+     * @param WPContextRequester $httpContext | the HTTP request.
      *
-     * @var string $nonceAction | takes the local action value in case $action is not set.
+     * @var WPContextRequester $httpContext | object instance containing the request data.
+     * @var string $nonce | stores the nonce name from request.
+     * @var string $nonceAction | stores the nonce action from request.
      *
      * @return int $result | value `0` if nonce is invalid.
      *                     | value `1` if nonce was generated in the past 12 hours or less.
@@ -55,7 +56,7 @@ class WPNonceChecker extends WPNonceAbstract
      * @see https://wiki.php.net/rfc/union_types_v2
      *
      */
-    public function verifyNonce(ArrayAccess $httpContext = null): int 
+    public function verifyNonce(WPContextRequester $httpContext = null): int 
     {
         $result = 0;
         $httpContext = (!$httpContext) ? new WPContextRequester() : $httpContext;
