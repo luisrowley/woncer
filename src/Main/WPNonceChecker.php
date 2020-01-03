@@ -36,6 +36,46 @@ class WPNonceChecker extends WPNonceAbstract
     const VERIFY_NONCE_FUNCTION_NAME = 'wp_verify_nonce';
 
     /**
+     * Verifies the nonce passed in some other context
+     *
+     * @see https://codex.wordpress.org/Function_Reference/wp_verify_nonce
+     *
+     * @param string $nonce     | the nonce to verify.
+     * @param string $action    | the context for the nonce.
+     *
+     * @var string $nonceAction | takes the local action value in case $action is not set.
+     *
+     * @return int $result | value `0` if nonce is invalid.
+     *                     | value `1` if nonce was generated in the past 12 hours or less.
+     *                     | value `2` if nonce was generated between 12 and 24 hours ago.
+     *
+     * wp_verify_nonce returns a boolean `false`. In this function we return an int `0` as `false`,
+     * as multiple return types are not supported yet, and will not be until PHP 8.0 is released.
+     *
+     * @see https://wiki.php.net/rfc/union_types_v2
+     *
+     */
+    public function verifyNonce(
+        ArrayAccess $httpContext = null
+    ): int {
+
+        $result = 0;
+        $httpContext = (!$httpContext) ? new WPContextRequester() : $httpContext;
+        $nonce = $httpContext->offsetExists($this->name) ? $httpContext[$this->name] : '';
+        $nonceAction = $httpContext->offsetExists($this->action) ? $httpContext[$this->action] : '';
+
+        if (!$nonce || empty(!$nonce)) {
+            return false;
+        }
+
+        if (function_exists(self::VERIFY_NONCE_FUNCTION_NAME)) {
+            $result = wp_verify_nonce($nonce, $nonceAction);
+        }
+
+        return (!$result) ? 0 : $result;
+    }
+
+    /**
      * Tests if the nonce is valid or if the request was referred from an admin.
      *
      * @see https://codex.wordpress.org/Function_Reference/check_admin_referer
@@ -89,42 +129,5 @@ class WPNonceChecker extends WPNonceAbstract
         }
 
         return $result;
-    }
-
-    /**
-     * Verifies the nonce passed in some other context
-     *
-     * @see https://codex.wordpress.org/Function_Reference/wp_verify_nonce
-     *
-     * @param string $nonce     | the nonce to verify.
-     * @param string $action    | the context for the nonce.
-     *
-     * @var string $nonceAction | takes the local action value in case $action is not set.
-     *
-     * @return int $result | value `0` if nonce is invalid.
-     *                     | value `1` if nonce was generated in the past 12 hours or less.
-     *                     | value `2` if nonce was generated between 12 and 24 hours ago.
-     *
-     * wp_verify_nonce returns a boolean `false`. In this function we return an int `0` as `false`,
-     * as multiple return types are not supported yet, and will not be until PHP 8.0 is released.
-     *
-     * @see https://wiki.php.net/rfc/union_types_v2
-     *
-     */
-    public function verifyNonce(
-        ArrayAccess $httpContext
-    ): int {
-
-        $result = 0;
-        $nonceAction = $httpContext->offsetExists($this->action) ? $httpContext[$this->action] : '';
-        $requester = new WPContextRequester();
-
-        /* http request validation here */
-
-        if (function_exists(self::VERIFY_NONCE_FUNCTION_NAME)) {
-            $result = wp_verify_nonce($nonce, $nonceAction);
-        }
-
-        return (!$result) ? 0 : $result;
     }
 }
