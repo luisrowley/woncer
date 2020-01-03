@@ -60,11 +60,11 @@ class WPNonceCreator extends WPNonceAbstract
      *
      * @see https://developer.wordpress.org/reference/functions/wp_create_nonce/
      *
-     * @param ArrayAccess $httpContext | the HTTP request.
+     * @param WPContextRequester $httpContext | the HTTP request data.
      *
      * @return string $result | the cryptographic token hash
      */
-    public function createFromRequest(ArrayAccess $httpContext = null): string
+    public function createFromRequest(WPContextRequester $httpContext = null): string
     {
         $result = "";
         $httpContext = (!$httpContext) ? new WPContextRequester() : $httpContext;
