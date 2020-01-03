@@ -55,6 +55,15 @@ class WPNonceCreator extends WPNonceAbstract
         return $result;
     }
 
+    /**
+     * Generates a new token directly from HTTP request context.
+     *
+     * @see https://developer.wordpress.org/reference/functions/wp_create_nonce/
+     *
+     * @param ArrayAccess $httpContext | the HTTP request.
+     *
+     * @return string $result | the cryptographic token hash
+     */
     public function createFromRequest(ArrayAccess $httpContext = null): string
     {
         $result = "";
