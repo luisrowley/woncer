@@ -4,7 +4,8 @@
 	<description>This defines the Inpsyde coding standards.</description>
 
 	<file>./src/Main/WPNonceChecker.php</file>
-	<!--<file>./src/Main/WPNonceFactory.php</file>
+	<file>./src/Main/WPNonceFactory.php</file>
+	<!--
 	<file>./src/Interfaces/WPNonceInterface.php</file>
 	<file>./tests/PHPUnit/WPNonceTest.php</file>
 	<file>./tests/PHPUnit/WPNonceCheckerTest.php</file>
