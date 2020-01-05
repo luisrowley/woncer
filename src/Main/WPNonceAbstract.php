@@ -72,7 +72,7 @@ abstract class WPNonceAbstract implements WPNonceInterface
      * @param string $action
      * @param string $name
      */
-    public function __construct(string $action, string $name, int $time = self::DEFAULT_LIFETIME)
+    public function __construct(string $action, string $name)
     {
         if (trim($action) === "") {
             $action = self::DEFAULT_NONCE_ACTION;
@@ -84,8 +84,6 @@ abstract class WPNonceAbstract implements WPNonceInterface
 
         $this->setAction($action);
         $this->setName($name);
-        $this->setTime($time);
-        $this->setNonceToken($this->action);
     }
 
     /**
