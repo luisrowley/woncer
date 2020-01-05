@@ -61,7 +61,7 @@ class WPNonceFactoryTest extends TestCase
 
     /**
      * Tests createDefaultChecker method with no parameters.
-     * It asserts that the correct token is returned.
+     * It asserts that the correct object properties are returned.
      *
      * covers @method WPNonceFactory::createDefaultChecker
      * covers @method WPNonceChecker::__construct
@@ -90,21 +90,23 @@ class WPNonceFactoryTest extends TestCase
      * It asserts that the correct token is returned.
      *
      * covers @method WPNonceFactory::createDefault
-     * covers @method WPNonce::__construct
-     * covers @method WPNonce::setAction
-     * covers @method WPNonce::setName
-     * covers @method WPNonce::setNonceToken
-     * covers @method WPNonce::createNonceToken
+     * covers @method WPNonceCreator::__construct
+     * covers @method WPNonceCreator::setAction
+     * covers @method WPNonceCreator::setName
+     * covers @method WPNonceCreator::createNonceToken
+     * covers @method WPNonceCreator::setNonceToken
      *
      * @return void
-     *//*
+     */
     public function testCreateDefaultWithParameters()
     {
         $actionParam = 'my_action';
         $nameParam = 'my_name';
         $tokenParam = 'my_token';
+        
         $wpNonceFactory = new WpNonceFactory();
-        MonkeyFunctions\expect(WPNonce::CREATE_NONCE_FUNCTION_NAME)
+
+        MonkeyFunctions\expect(WPNonceCreator::CREATE_NONCE_FUNCTION_NAME)
             ->with($actionParam)
             ->andReturn($tokenParam);
 
@@ -124,27 +126,20 @@ class WPNonceFactoryTest extends TestCase
      * covers @method WPNonceChecker::__construct
      * covers @method WPNonceChecker::setAction
      * covers @method WPNonceChecker::setName
-     * covers @method WPNonceChecker::setNonceToken
-     * covers @method WPNonceChecker::createNonceToken
      *
      * @return void
-     *//*
+     */
     public function testCreateCheckerWithParameters()
     {
         $actionParam = 'my_action';
         $nameParam = 'my_name';
-        $tokenParam = 'my_token';
+
         $wpNonceFactory = new WpNonceFactory();
-        MonkeyFunctions\expect(WPNonce::CREATE_NONCE_FUNCTION_NAME)
-            ->with($actionParam)
-            ->andReturn($tokenParam);
 
         $wpNonceChecker = $wpNonceFactory->createDefaultChecker($actionParam, $nameParam);
 
         $this->assertSame($actionParam, $wpNonceChecker->action());
         $this->assertSame($nameParam, $wpNonceChecker->name());
-        $this->assertNotEmpty($wpNonceChecker->token());
-        $this->assertSame($tokenParam, $wpNonceChecker->token());
     }
 
     /**
