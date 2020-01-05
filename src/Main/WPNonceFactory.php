@@ -29,7 +29,7 @@ class WPNonceFactory
     /**
      * Creates and returns a default WPNonce instance
      *
-     * @return WPNonce
+     * @return WPNonceCreator
      */
     public static function createDefault(
         string $action = self::DEFAULT_NONCE_ACTION,

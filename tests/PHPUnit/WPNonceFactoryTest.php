@@ -50,8 +50,8 @@ class WPNonceFactoryTest extends TestCase
         
         $wpNonce = $wpNonceFactory->createDefault();
 
-        $this->assertInstanceOf(WPNonce::class, $wpNonce);
-        $this->assertClassHasAttribute('action', WPNonce::class);
+        $this->assertInstanceOf(WPNonceCreator::class, $wpNonce);
+        $this->assertClassHasAttribute('action', WPNonceCreator::class);
 
         $this->assertSame($defaultAction, $wpNonce->action());
         $this->assertSame($defaultName, $wpNonce->name());

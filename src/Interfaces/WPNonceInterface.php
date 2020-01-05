@@ -23,9 +23,9 @@ interface WPNonceInterface
     /**
      * Setter method for the `$time` private property.
      *
-     * @param string $time | the nonce lifetime.
+     * @param int $time | the nonce lifetime.
      */
-    public function setTime(string $_time);
+    public function setTime(int $_time);
 
     /**
      * Setter method for the `$token` private property.
