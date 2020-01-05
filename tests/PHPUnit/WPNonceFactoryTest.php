@@ -143,25 +143,27 @@ class WPNonceFactoryTest extends TestCase
     }
 
     /**
-     * Test to assert that giving string of `space characters` as parameters for createDefault()
-     * results in the default class properties for the WPNonce function.
+     * Test to assert that giving string of `space characters` as parameters
+     * for createDefault() results in the default class properties.
      *
      * covers @method WPNonceFactory::createDefault
-     * covers @method WPNonce::__construct
-     * covers @method WPNonce::setAction
-     * covers @method WPNonce::setName
-     * covers @method WPNonce::setNonceToken
-     * covers @method WPNonce::createNonceToken
+     * covers @method WPNonceCreator::__construct
+     * covers @method WPNonceCreator::setAction
+     * covers @method WPNonceCreator::setName
+     * covers @method WPNonceCreator::createNonceToken
+     * covers @method WPNonceCreator::setNonceToken
      *
      * @return void
-     *//*
+     */
     public function testCreateDefaultWithSpaceParameters()
     {
         $actionParam = '     ';
         $nameParam = '     ';
         $tokenParam = 'my_token';
+
         $wpNonceFactory = new WpNonceFactory();
-        MonkeyFunctions\expect(WPNonce::CREATE_NONCE_FUNCTION_NAME)
+
+        MonkeyFunctions\expect(WPNonceCreator::CREATE_NONCE_FUNCTION_NAME)
             ->with($actionParam)
             ->andReturn($tokenParam);
 
@@ -172,31 +174,27 @@ class WPNonceFactoryTest extends TestCase
     }
 
     /**
-     * Test to assert that giving string of `space characters` as parameters for createDefaultChecker()
-     * results in the default class properties for the WPNonce function.
+     * Test to assert that giving string of `space characters` as parameters
+     * for createDefaultChecker() results in the default class properties.
      *
      * covers @method WPNonceFactory::createDefaultChecker
      * covers @method WPNonceChecker::__construct
      * covers @method WPNonceChecker::setAction
      * covers @method WPNonceChecker::setName
-     * covers @method WPNonceChecker::setNonceToken
-     * covers @method WPNonceChecker::createNonceToken
      *
      * @return void
-     *//*
+     */
     public function testCreateDefaultCheckerWithSpaceParameters()
     {
         $actionParam = '     ';
         $nameParam = '     ';
         $tokenParam = 'my_token';
+
         $wpNonceFactory = new WpNonceFactory();
-        MonkeyFunctions\expect(WPNonceChecker::CREATE_NONCE_FUNCTION_NAME)
-            ->with($actionParam)
-            ->andReturn($tokenParam);
 
         $wpNonceChecker = $wpNonceFactory->createDefaultChecker($actionParam, $nameParam);
 
         $this->assertSame($wpNonceFactory::DEFAULT_NONCE_ACTION, $wpNonceChecker->action());
         $this->assertSame($wpNonceFactory::DEFAULT_NONCE_NAME, $wpNonceChecker->name());
-    }*/
+    }
 }
