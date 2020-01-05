@@ -8,6 +8,8 @@ use PHPUnit\Framework\TestCase;
 
 use Brain\Monkey\Functions as MonkeyFunctions;
 
+use luisdeb\Woncer\Main\WPNonceAbstract;
+
 use luisdeb\Woncer\Main\WPNonceCreator;
 
 use luisdeb\Woncer\Main\WPNonceChecker;
@@ -51,7 +53,7 @@ class WPNonceFactoryTest extends TestCase
         $wpNonce = $wpNonceFactory->createDefault();
 
         $this->assertInstanceOf(WPNonceCreator::class, $wpNonce);
-        $this->assertClassHasAttribute('action', WPNonceCreator::class);
+        $this->assertClassHasAttribute('action', WPNonceAbstract::class);
 
         $this->assertSame($defaultAction, $wpNonce->action());
         $this->assertSame($defaultName, $wpNonce->name());
