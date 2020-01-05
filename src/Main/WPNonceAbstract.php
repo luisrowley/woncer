@@ -41,21 +41,21 @@ abstract class WPNonceAbstract implements WPNonceInterface
      *
      * @var string|int $action
      */
-    private $action;
+    protected $action;
 
     /**
      * The name value for the nonce.
      *
      * @var string $name
      */
-    private $name;
+    protected $name;
 
     /**
      * The lifetime for the nonce in seconds.
      *
      * @var int $time
      */
-    private $time;
+    protected $time;
 
     /**
      * One-time cryptographic hash to verify any user, user session and action.
