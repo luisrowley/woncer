@@ -45,7 +45,7 @@ class WPNonceCreator extends WPNonceAbstract
     public function createNonceToken(string $action = null): string
     {
         $result = "";
-        $nonceAction = (!$action) ? $this->action : $action;
+        $nonceAction = (!$action) ? $this->action() : $action;
 
         if (function_exists(self::CREATE_NONCE_FUNCTION_NAME)) {
             $result = (string)wp_create_nonce($nonceAction);
@@ -68,7 +68,7 @@ class WPNonceCreator extends WPNonceAbstract
     {
         $result = "";
         $httpContext = (!$httpContext) ? new WPContextRequester() : $httpContext;
-        $nonceAction = $httpContext->offsetExists($this->action) ? $httpContext[$this->action] : '';
+        $nonceAction = $httpContext->offsetExists($this->action()) ? $httpContext[$this->action()] : '';
 
         if (is_string($nonceAction)) {
             $result = $this->createNonceToken($nonceAction);
