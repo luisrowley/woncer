@@ -24,13 +24,12 @@ class WPNonceFieldCreatorTest extends TestCase
     /**
      * Tests WPNonce::addNonceToForm() method.
      *
-     * covers @method WPNonceFactory::createDefault
-     * covers @method WPNonce::__construct
-     * covers @method WPNonce::setAction
-     * covers @method WPNonce::setName
-     * covers @method WPNonce::setNonceToken
-     * covers @method WPNonce::createNonceToken
-     * covers @method WPNonce::addNonceToForm
+     * covers @method WPNonceFieldCreator::__construct
+     * covers @method WPNonceFieldCreator::setAction
+     * covers @method WPNonceFieldCreator::setName
+     * covers @method WPNonceFieldCreator::setNonceToken
+     * covers @method WPNonceFieldCreator::createNonceToken
+     * covers @method WPNonceFieldCreator::addNonceToForm
      *
      * @return void
      */
@@ -49,12 +48,12 @@ class WPNonceFieldCreatorTest extends TestCase
             ->andReturn($tokenParam);
 
         MonkeyFunctions\expect('esc_attr')
-        ->twice()
-        ->andReturn($nonceName, $tokenParam);
+            ->twice()
+            ->andReturn($nonceName, $tokenParam);
 
         MonkeyFunctions\expect('wp_referer_field')
-        ->once()
-        ->andReturn($referer);
+            ->once()
+            ->andReturn($referer);
 
         MonkeyFunctions\expect('addNonceToForm')
             ->once()
