@@ -72,11 +72,11 @@ class WPNonceChecker extends WPNonceAbstract
     {
         $result = 0;
         $httpContext = (!$httpContext) ? new WPContextRequester() : $httpContext;
-        $nonce = $httpContext->offsetExists($this->name) ? $httpContext[$this->name] : '';
-        $nonceAction = $httpContext->offsetExists($this->action) ? $httpContext[$this->action] : '';
+        $nonce = $httpContext->offsetExists($this->name()) ? $httpContext[$this->name()] : '';
+        $nonceAction = $httpContext->offsetExists($this->action()) ? $httpContext[$this->action()] : '';
 
-        if (!$nonce || empty(!$nonce) || !is_string($nonceAction)) {
-            return false;
+        if (!is_string($nonce) || !is_string($nonceAction)) {
+            return 0;
         }
 
         if (function_exists(self::VERIFY_NONCE_FUNCTION_NAME)) {
