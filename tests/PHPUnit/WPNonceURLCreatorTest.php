@@ -8,9 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 use Brain\Monkey\Functions as MonkeyFunctions;
 
-use luisdeb\Woncer\Main\WPNonce;
-
-use luisdeb\Woncer\Main\WPNonceFactory;
+use luisdeb\Woncer\Main\WPNonceURLCreator;
 
 /**
  * This class Implements the Unit Test methodology for the WPNonce class.
@@ -24,20 +22,23 @@ class WPNonceTest extends TestCase
     /**
      * Unit tests for WPNonce::addNonceUrl() method.
      *
-     * covers @method WPNonceFactory::createDefault
-     * covers @method WPNonce::__construct
-     * covers @method WPNonce::setAction
-     * covers @method WPNonce::setName
-     * covers @method WPNonce::setNonceToken
-     * covers @method WPNonce::createNonceToken
-     * covers @method WPNonce::addNonceUrl
+     * covers @method WPNonceURLCreator::__construct
+     * covers @method WPNonceURLCreator::setAction
+     * covers @method WPNonceURLCreator::setName
+     * covers @method WPNonceURLCreator::createNonceToken
+     * covers @method WPNonceURLCreator::setNonceToken
+     * covers @method WPNonceURLCreator::addNonceUrl
      *
      * @return void
      */
     public function testUrl()
     {
+        $nonceName = "_wpnonce";
+        $nonceAction = "-1";
         $actionUrl = 'http://www.somewpdomain.com';
-        $wpNonceFactory = new WPNonceFactory();
+
+        $wpNonceURLCreator = new WPNonceURLCreator($nonceAction, $nonceName);
+
         MonkeyFunctions\expect(WPNonce::CREATE_NONCE_FUNCTION_NAME)
             ->once();
         $wpNonce = $wpNonceFactory->createDefault();
@@ -48,34 +49,5 @@ class WPNonceTest extends TestCase
             ->andReturn($actionUrl . '?escaped=with-nonce-action');
         $result = $wpNonce->addNonceUrl($actionUrl);
         $this->assertStringStartsWith('http', $result);
-    }
-
-    /**
-     * Tests WPNonce::addNonceToForm() method.
-     *
-     * covers @method WPNonceFactory::createDefault
-     * covers @method WPNonce::__construct
-     * covers @method WPNonce::setAction
-     * covers @method WPNonce::setName
-     * covers @method WPNonce::setNonceToken
-     * covers @method WPNonce::createNonceToken
-     * covers @method WPNonce::addNonceToForm
-     *
-     * @return void
-     */
-    public function testForm()
-    {
-        $wpField = '<input type="hidden" id="_wpnonce" name="_wpnonce" value="nonce" />';
-        $wpNonceFactory = new WPNonceFactory();
-        MonkeyFunctions\expect(WPNonce::CREATE_NONCE_FUNCTION_NAME)
-            ->once();
-        $wpNonce = $wpNonceFactory->createDefault();
-        $result = $wpNonce->addNonceToForm();
-        $this->assertEmpty($result);
-        MonkeyFunctions\expect(WPNonce::NONCE_FIELD_FUNCTION_NAME)
-            ->once()
-            ->andReturn($wpField);
-        $result = $wpNonce->addNonceToForm();
-        $this->assertEquals($wpField, $result);
     }
 }
