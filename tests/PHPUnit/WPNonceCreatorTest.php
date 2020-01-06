@@ -10,8 +10,6 @@ use Brain\Monkey\Functions as MonkeyFunctions;
 
 use luisdeb\Woncer\Main\WPNonceCreator;
 
-use luisdeb\Woncer\Main\WPNonceFactory;
-
 use luisdeb\Woncer\Main\WPContextRequester;
 
 /**
@@ -30,14 +28,16 @@ class WPNonceCreatorTest extends TestCase
      * covers @method WPNonceCreator::__construct
      * covers @method WPNonceCreator::setAction
      * covers @method WPNonceCreator::setName
-     * covers @method WPNonceCreator::setNonceToken
      * covers @method WPNonceCreator::createFromRequest
+     * covers @method WPNonceCreator::createNonceToken
+     * covers @method WPNonceCreator::setNonceToken
      *
      * @return void
      */
     public function testCreateFromRequest()
     {
-        $wpNonceFactory = new WPNonceFactory();
+        $tokenParam = "my_token";
+
         $mockRequest = $this->getMockBuilder(WPContextRequester::class)
              ->disableOriginalConstructor()
              ->getMock();
@@ -45,18 +45,14 @@ class WPNonceCreatorTest extends TestCase
         $mockRequest->httpRequest = array("_wpnonce" => "bar", "action" => "foo");
         $mockRequest->httpMethod = 'POST';
 
-        $wpNonceCreator = $wpNonceFactory->createDefaultChecker();
+        $wpNonceCreator = new WPNonceCreator('-1', '_wpnonce');
 
         MonkeyFunctions\expect(WPNonceCreator::CREATE_NONCE_FUNCTION_NAME)
-            ->once();
-        
-        $wpNonce = $wpNonceFactory->createDefault();
-        $result = $wpNonce->addNonceUrl($actionUrl);
-        $this->assertEmpty($result);
-        MonkeyFunctions\expect(WPNonce::NONCE_URL_FUNCTION_NAME)
             ->once()
-            ->andReturn($actionUrl . '?escaped=with-nonce-action');
-        $result = $wpNonce->addNonceUrl($actionUrl);
-        $this->assertStringStartsWith('http', $result);
+            ->andReturn($tokenParam);
+        
+        $result = $wpNonceCreator->createFromRequest($mockRequest);
+        $this->assertNotEmpty($result);
+        $this->assertSame($tokenParam, $wpNonceCreator->token());
     }
 }
