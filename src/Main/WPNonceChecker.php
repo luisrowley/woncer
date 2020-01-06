@@ -100,7 +100,7 @@ class WPNonceChecker extends WPNonceAbstract
      */
     public function checkAdminReferer(
         string $action = null,
-        string $queryArg = null
+        string $queryArg = '_wpnonce'
     ): bool {
 
         $result = false;
