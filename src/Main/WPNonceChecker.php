@@ -68,7 +68,7 @@ class WPNonceChecker extends WPNonceAbstract
      * @see https://wiki.php.net/rfc/union_types_v2
      *
      */
-    public function verifyNonce(WPContextRequester $httpContext = null): int 
+    public function verifyNonce(WPContextRequester $httpContext = null): int
     {
         $result = 0;
         $httpContext = (!$httpContext) ? new WPContextRequester() : $httpContext;
