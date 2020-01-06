@@ -13,7 +13,7 @@ use luisdeb\Woncer\Main\WPNonceFieldCreator;
 use luisdeb\Woncer\Main\WPNonceFactory;
 
 /**
- * This class Implements the Unit Test methodology for the WPNonce class.
+ * This class Implements the Unit Test methodology for the WPNonceFieldCreator class.
  *
  * PHPUnit version 8.0 *
  * @see https://phpunit.de/getting-started/phpunit-8.html
