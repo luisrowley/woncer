@@ -9,14 +9,21 @@ namespace luisdeb\Woncer\Main;
  *
  * @since v0.0.2
  */
-final class WPContextRequester implements ArrayAccess
+class WPContextRequester implements \ArrayAccess
 {
     /**
      * The HTTP request data based on method.
      *
-     * @var int $httpRequest
+     * @var array $httpRequest
      */
     private $httpRequest = [];
+
+    /**
+     * The HTTP request method.
+     *
+     * @var string $httpMethod
+     */
+    private $httpMethod = '';
 
     /**
      * Class constructor covering basic parameters.
@@ -26,11 +33,11 @@ final class WPContextRequester implements ArrayAccess
     public function __construct()
     {
         $inputMethod = filter_input(INPUT_SERVER, 'REQUEST_METHOD', FILTER_SANITIZE_SPECIAL_CHARS);
-        $httpMethod = !isset($inputMethod) ? null : $inputMethod;
+        $this->httpMethod = !isset($inputMethod) ? null : $inputMethod;
         
-        if(isset($httpMethod) && 
-        strtoupper($httpMethod) === 'GET' || 
-        strtoupper($httpMethod) === 'POST')
+        if(isset($this->httpMethod) && 
+        strtoupper($this->httpMethod) === 'GET' ||
+        strtoupper($this->httpMethod) === 'POST')
         {
             $this->httpRequest = array_merge($_GET, $_POST);
         }

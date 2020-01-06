@@ -12,6 +12,8 @@ use luisdeb\Woncer\Main\WPNonceChecker;
 
 use luisdeb\Woncer\Main\WPNonceFactory;
 
+use luisdeb\Woncer\Main\WPContextRequester;
+
 /**
  * This class implements the Unit Test methodology for WPNonceChecker class.
  *
@@ -28,8 +30,6 @@ class WPNonceCheckerTest extends TestCase
      * covers @method WPNonceChecker::__construct
      * covers @method WPNonceChecker::setAction
      * covers @method WPNonceChecker::setName
-     * covers @method WPNonceChecker::setNonceToken
-     * covers @method WPNonceChecker::createNonceToken
      * covers @method WPNonceChecker::checkAdminReferer
      *
      * @return void
@@ -37,8 +37,6 @@ class WPNonceCheckerTest extends TestCase
     public function testCheckAdminReferer()
     {
         $wpNonceFactory = new WPNonceFactory();
-        MonkeyFunctions\expect(WPNonceChecker::CREATE_NONCE_FUNCTION_NAME)
-            ->once();
         
         $wpNonceChecker = $wpNonceFactory->createDefaultChecker();
         $result = $wpNonceChecker->checkAdminReferer();
@@ -77,8 +75,6 @@ class WPNonceCheckerTest extends TestCase
     public function testCheckAjaxReferer()
     {
         $wpNonceFactory = new WPNonceFactory();
-        MonkeyFunctions\expect(WPNonceChecker::CREATE_NONCE_FUNCTION_NAME)
-            ->once();
         
         $wpNonceChecker = $wpNonceFactory->createDefaultChecker();
         $result = $wpNonceChecker->checkAjaxReferer();
@@ -116,19 +112,24 @@ class WPNonceCheckerTest extends TestCase
      */
     public function testVerifyNonce()
     {
-        $sampleToken = "mySampleToken";
         $wpNonceFactory = new WPNonceFactory();
-        MonkeyFunctions\expect(WPNonceChecker::CREATE_NONCE_FUNCTION_NAME)
-            ->once();
+        $mockRequest = $this->getMockBuilder(WPContextRequester::class)
+             ->disableOriginalConstructor()
+             ->getMock();
+
+        $mockRequest->httpRequest = array("_wpnonce" => "bar", "action" => "foo");
+        $mockRequest->httpMethod = 'POST';
+
         $wpNonceChecker = $wpNonceFactory->createDefaultChecker();
-        $result = $wpNonceChecker->verifyNonce($sampleToken);
+        
+        $result = $wpNonceChecker->verifyNonce($mockRequest);
         $this->assertEmpty($result);
 
         MonkeyFunctions\expect(WPNonceChecker::VERIFY_NONCE_FUNCTION_NAME)
             ->once()
             ->andReturn(false);
 
-        $result = $wpNonceChecker->verifyNonce($sampleToken);
+        $result = $wpNonceChecker->verifyNonce($mockRequest);
         $this->assertIsInt($result);
         $this->assertEquals(0, $result);
 
@@ -136,7 +137,7 @@ class WPNonceCheckerTest extends TestCase
             ->once()
             ->andReturn(0);
 
-        $result = $wpNonceChecker->verifyNonce($sampleToken);
+        $result = $wpNonceChecker->verifyNonce($mockRequest);
         $this->assertIsInt($result);
         $this->assertEquals(0, $result);
         
@@ -144,7 +145,7 @@ class WPNonceCheckerTest extends TestCase
             ->once()
             ->andReturn(1);
 
-        $result = $wpNonceChecker->verifyNonce($sampleToken);
+        $result = $wpNonceChecker->verifyNonce($mockRequest);
         $this->assertIsInt($result);
         $this->assertEquals(1, $result);
 
@@ -152,7 +153,7 @@ class WPNonceCheckerTest extends TestCase
             ->once()
             ->andReturn(2);
 
-        $result = $wpNonceChecker->verifyNonce($sampleToken);
+        $result = $wpNonceChecker->verifyNonce($mockRequest);
         $this->assertIsInt($result);
         $this->assertEquals(2, $result);
     }
