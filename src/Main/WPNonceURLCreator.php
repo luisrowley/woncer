@@ -9,7 +9,7 @@ use luisdeb\Woncer\Main\WPNonceCreator as WPNonceCreator;
 /**
  * Handles Nonce creation as a URL query parameter.
  * It implements the original wp_nonce_url function logic.
- * 
+ *
  * @see https://developer.wordpress.org/reference/functions/wp_nonce_url/
  *
  * @since v0.0.2
@@ -29,7 +29,7 @@ class WPNonceURLCreator extends WPNonceCreator
     }
 
     /**
-     * Generates new URL with nonce added to input URL query 
+     * Generates new URL with nonce added to input URL query
      * or an empty string if the input URL query is invalid.
      *
      * @see https://developer.wordpress.org/reference/functions/wp_nonce_url/
@@ -54,7 +54,7 @@ class WPNonceURLCreator extends WPNonceCreator
         $nonceName = (!$name) ? $this->name() : $name;
 
         if (filter_var($actionUrl, FILTER_VALIDATE_URL)) {
-            $actionUrl = str_replace( '&amp;', '&', $actionUrl );
+            $actionUrl = str_replace('&amp;', '&', $actionUrl);
             $nonceToken = $this->createNonceToken($nonceAction);
             $nonceUrl = esc_html(add_query_arg($nonceName, $nonceToken, $actionUrl));
         }

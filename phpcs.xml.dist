@@ -3,10 +3,13 @@
 
 	<description>This defines the Inpsyde coding standards.</description>
 
-	<file>./src/Main/WPNonceChecker.php</file>
-	<file>./src/Main/WPNonceFactory.php</file>
 	<file>./src/Interfaces/WPNonceInterface.php</file>
 	<file>./src/Main/WPNonceAbstract.php</file>
+	<file>./src/Main/WPNonceChecker.php</file>
+	<file>./src/Main/WPNonceCreator.php</file>
+	<file>./src/Main/WPNonceURLCreator.php</file>
+	<file>./src/Main/WPNonceFieldCreator.php</file>
+	<file>./src/Main/WPNonceFactory.php</file>
 	<!--
 
 	<file>./tests/PHPUnit/WPNonceTest.php</file>
