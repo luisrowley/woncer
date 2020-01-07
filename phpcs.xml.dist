@@ -5,8 +5,10 @@
 
 	<file>./src/Main/WPNonceChecker.php</file>
 	<file>./src/Main/WPNonceFactory.php</file>
-	<!--
 	<file>./src/Interfaces/WPNonceInterface.php</file>
+	<file>./src/Main/WPNonceAbstract.php</file>
+	<!--
+
 	<file>./tests/PHPUnit/WPNonceTest.php</file>
 	<file>./tests/PHPUnit/WPNonceCheckerTest.php</file>
 	<file>./tests/PHPUnit/WPNonceFactoryTest.php</file>-->

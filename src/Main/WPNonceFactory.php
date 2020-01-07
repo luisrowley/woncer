@@ -36,9 +36,9 @@ class WPNonceFactory
         string $name = self::DEFAULT_NONCE_NAME
     ): WPNonceCreator {
 
-        $WpNonceCreator = new WPNonceCreator($action, $name);
-        $WpNonceCreator->createNonceToken($action);
-        return $WpNonceCreator;
+        $wpNonceCreator = new WPNonceCreator($action, $name);
+        $wpNonceCreator->createNonceToken($action);
+        return $wpNonceCreator;
     }
 
     /**
