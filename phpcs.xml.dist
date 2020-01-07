@@ -12,6 +12,7 @@
 	<file>./src/Main/WPNonceFactory.php</file>
 
 	<file>./tests/PHPUnit/WPNonceCreatorTest.php</file>
+	<file>./tests/PHPUnit/WPNonceFieldCreatorTest.php</file>
 	<file>./tests/PHPUnit/WPNonceURLCreatorTest.php</file>
 	<file>./tests/PHPUnit/WPNonceCheckerTest.php</file>
 	<file>./tests/PHPUnit/WPNonceFactoryTest.php</file>

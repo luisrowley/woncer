@@ -34,7 +34,7 @@ class WPNonceFieldCreatorTest extends TestCase
      * @return void
      */
     public function testForm()
-    {        
+    {
         $nonceName = "_wpnonce";
         $nonceAction = "-1";
         $tokenParam = "nonce";
