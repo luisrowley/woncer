@@ -49,7 +49,7 @@ class WPNonceCreator extends WPNonceAbstract
 
         if (function_exists(self::CREATE_NONCE_FUNCTION_NAME)) {
             $result = (string)wp_create_nonce($nonceAction);
-            $this->setNonceToken($result);
+            $this->changeNonceToken($result);
         }
 
         return $result;
