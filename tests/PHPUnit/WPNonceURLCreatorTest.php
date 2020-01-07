@@ -17,7 +17,7 @@ use luisdeb\Woncer\Main\WPNonceURLCreator;
  * @see https://phpunit.de/getting-started/phpunit-8.html
  *
  */
-class WPNonceTest extends TestCase
+class WPNonceURLCreatorTest extends TestCase
 {
     /**
      * Unit tests for WPNonce::addNonceUrl() method.
@@ -38,7 +38,7 @@ class WPNonceTest extends TestCase
         $tokenParam = "nonce";
         $actionUrl = 'http://www.somewpdomain.com';
 
-        $wpNonceURLCreator = new WPNonceURLCreator($nonceAction, $nonceName);
+        $wpNonceUrlCreator = new WPNonceURLCreator($nonceAction, $nonceName);
 
         MonkeyFunctions\expect(WPNonceURLCreator::CREATE_NONCE_FUNCTION_NAME)
             ->once()
@@ -56,7 +56,7 @@ class WPNonceTest extends TestCase
             ->once()
             ->andReturn($actionUrl . '?_wpnonce=nonce');
 
-        $result = $wpNonceURLCreator->addNonceUrl($actionUrl);
+        $result = $wpNonceUrlCreator->addNonceUrl($actionUrl);
         $this->assertStringStartsWith('http', $result);
         $this->assertSame($actionUrl . '?_wpnonce=nonce', $result);
     }
