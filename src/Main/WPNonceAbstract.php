@@ -10,7 +10,7 @@ use luisdeb\Woncer\Interfaces\WPNonceInterface as WPNonceInterface;
  * Absctract class to provide with the basic Nonce Object structure.
  *
  * @see https://codex.wordpress.org/Wordpress_Nonce_Implementation
- * 
+ *
  * @since v0.0.2
  */
 abstract class WPNonceAbstract implements WPNonceInterface
@@ -82,48 +82,18 @@ abstract class WPNonceAbstract implements WPNonceInterface
             $name = self::DEFAULT_NONCE_NAME;
         }
 
-        $this->setAction($action);
-        $this->setName($name);
-    }
-
-    /**
-     * Setter method for the `$action` private property.
-     *
-     * @param string $action | the nonce action.
-     */
-    public function setAction(string $_action)
-    {
-        $this->action = $_action;
-    }
-
-    /**
-     * Setter method for the `$name` private property.
-     *
-     * @param string $name | the nonce name.
-     */
-    public function setName(string $_name)
-    {
-        $this->name = $_name;
-    }
-
-    /**
-     * Setter method for the `$time` private property.
-     *
-     * @param string $time | the nonce lifetime.
-     */
-    public function setTime(int $_time)
-    {
-        $this->time = $_time;
+        $this->action = $action;
+        $this->name = $name;
     }
 
     /**
      * Setter method for the `$token` private property.
      *
-     * @param string $action | the nonce context.
+     * @param string $token | the nonce context.
      */
-    public function setNonceToken(string $_token)
+    public function changeNonceToken(string $token)
     {
-        $this->token = $_token;
+        $this->token = $token;
     }
 
     /**
