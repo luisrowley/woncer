@@ -15,11 +15,11 @@
 
 **Implemented enhancements:**
 
-1. Instead of building a parent/child relationship between these two classes (`WPNonce` and `WPNonceChecker`), a better solution was to implement a "top-level" abstract class called `WPNonceAbstract` with the main Nonce definition. This abstract class will be implemented by any of the classes which may need a basic Nonce definition to properly work.
+1. Instead of building a parent/child relationship between these two classes (`WPNonce` and `WPNonceChecker`), a better solution was to implement a "top-level" abstract class called `WPNonceAbstract` with the main Nonce definition. This abstract class will be implemented by any of the classes which may need a basic Nonce definition to properly work, but without limiting the extending classes from providing an alternative Nonce implementation if necessary.
 
-2. The solution was to implement a separate class for each different context: `WPNonceDefaultCreator`, `WPNonceURLCreator` and `WPNonceFieldCreator`.
+2. The solution was to implement a separate class for each different context: `WPNonceCreator` for a default context, `WPNonceURLCreator` to add the nonce as a URL parameter and `WPNonceFieldCreator` to append the nonce as a form field.
 
-3. New logic was created in `WPNonceAbstract` to verify the Nonce context based on HTTP request. This can be implemented both by Nonce "Creator" classes and by the Nonce "Checker" class.
+3. New logic was created in `WPContextRequester` class to verify the Nonce context based on HTTP request. This can be implemented both by Nonce "Creator" classes and by the Nonce "Checker" class.
 
 4. A new interface definition was placed on top of `WPNonceAbstract` to comply with the structural requirements for a basic Nonce implementation.
 

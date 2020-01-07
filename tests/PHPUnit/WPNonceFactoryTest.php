@@ -8,7 +8,9 @@ use PHPUnit\Framework\TestCase;
 
 use Brain\Monkey\Functions as MonkeyFunctions;
 
-use luisdeb\Woncer\Main\WPNonce;
+use luisdeb\Woncer\Main\WPNonceAbstract;
+
+use luisdeb\Woncer\Main\WPNonceCreator;
 
 use luisdeb\Woncer\Main\WPNonceChecker;
 
@@ -28,11 +30,10 @@ class WPNonceFactoryTest extends TestCase
      * It asserts that the correct token is returned.
      *
      * covers @method WPNonceFactory::createDefault
-     * covers @method WPNonce::__construct
-     * covers @method WPNonce::setAction
-     * covers @method WPNonce::setName
-     * covers @method WPNonce::setNonceToken
-     * covers @method WPNonce::createNonceToken
+     * covers @method WPNonceCreator::__construct
+     * covers @method WPNonceCreator::setAction
+     * covers @method WPNonceCreator::setName
+     * covers @method WPNonceCreator::createNonceToken
      *
      * @return void
      */
@@ -44,14 +45,14 @@ class WPNonceFactoryTest extends TestCase
 
         $wpNonceFactory = new WPNonceFactory();
 
-        MonkeyFunctions\expect(WPNonce::CREATE_NONCE_FUNCTION_NAME)
+        MonkeyFunctions\expect(WPNonceCreator::CREATE_NONCE_FUNCTION_NAME)
             ->with($defaultAction)
             ->andReturn($tokenParam);
         
         $wpNonce = $wpNonceFactory->createDefault();
 
-        $this->assertInstanceOf(WPNonce::class, $wpNonce);
-        $this->assertClassHasAttribute('action', WPNonce::class);
+        $this->assertInstanceOf(WPNonceCreator::class, $wpNonce);
+        $this->assertClassHasAttribute('action', WPNonceAbstract::class);
 
         $this->assertSame($defaultAction, $wpNonce->action());
         $this->assertSame($defaultName, $wpNonce->name());
@@ -60,14 +61,12 @@ class WPNonceFactoryTest extends TestCase
 
     /**
      * Tests createDefaultChecker method with no parameters.
-     * It asserts that the correct token is returned.
+     * It asserts that the correct object properties are returned.
      *
-     * covers @method WPNonceFactory::createDefault
+     * covers @method WPNonceFactory::createDefaultChecker
      * covers @method WPNonceChecker::__construct
      * covers @method WPNonceChecker::setAction
      * covers @method WPNonceChecker::setName
-     * covers @method WPNonceChecker::setNonceToken
-     * covers @method WPNonceChecker::createNonceToken
      *
      * @return void
      */
@@ -75,13 +74,8 @@ class WPNonceFactoryTest extends TestCase
     {
         $defaultAction = '-1';
         $defaultName = '_wpnonce';
-        $tokenParam = "my_token";
 
         $wpNonceFactory = new WPNonceFactory();
-
-        MonkeyFunctions\expect(WPNonce::CREATE_NONCE_FUNCTION_NAME)
-            ->with($defaultAction)
-            ->andReturn($tokenParam);
 
         $wpNonceChecker = $wpNonceFactory->createDefaultChecker();
 
@@ -89,7 +83,6 @@ class WPNonceFactoryTest extends TestCase
 
         $this->assertSame($defaultAction, $wpNonceChecker->action());
         $this->assertSame($defaultName, $wpNonceChecker->name());
-        $this->assertSame($tokenParam, $wpNonceChecker->token());
     }
 
     /**
@@ -97,11 +90,11 @@ class WPNonceFactoryTest extends TestCase
      * It asserts that the correct token is returned.
      *
      * covers @method WPNonceFactory::createDefault
-     * covers @method WPNonce::__construct
-     * covers @method WPNonce::setAction
-     * covers @method WPNonce::setName
-     * covers @method WPNonce::setNonceToken
-     * covers @method WPNonce::createNonceToken
+     * covers @method WPNonceCreator::__construct
+     * covers @method WPNonceCreator::setAction
+     * covers @method WPNonceCreator::setName
+     * covers @method WPNonceCreator::createNonceToken
+     * covers @method WPNonceCreator::setNonceToken
      *
      * @return void
      */
@@ -110,8 +103,10 @@ class WPNonceFactoryTest extends TestCase
         $actionParam = 'my_action';
         $nameParam = 'my_name';
         $tokenParam = 'my_token';
+        
         $wpNonceFactory = new WpNonceFactory();
-        MonkeyFunctions\expect(WPNonce::CREATE_NONCE_FUNCTION_NAME)
+
+        MonkeyFunctions\expect(WPNonceCreator::CREATE_NONCE_FUNCTION_NAME)
             ->with($actionParam)
             ->andReturn($tokenParam);
 
@@ -131,8 +126,6 @@ class WPNonceFactoryTest extends TestCase
      * covers @method WPNonceChecker::__construct
      * covers @method WPNonceChecker::setAction
      * covers @method WPNonceChecker::setName
-     * covers @method WPNonceChecker::setNonceToken
-     * covers @method WPNonceChecker::createNonceToken
      *
      * @return void
      */
@@ -140,30 +133,25 @@ class WPNonceFactoryTest extends TestCase
     {
         $actionParam = 'my_action';
         $nameParam = 'my_name';
-        $tokenParam = 'my_token';
+
         $wpNonceFactory = new WpNonceFactory();
-        MonkeyFunctions\expect(WPNonce::CREATE_NONCE_FUNCTION_NAME)
-            ->with($actionParam)
-            ->andReturn($tokenParam);
 
         $wpNonceChecker = $wpNonceFactory->createDefaultChecker($actionParam, $nameParam);
 
         $this->assertSame($actionParam, $wpNonceChecker->action());
         $this->assertSame($nameParam, $wpNonceChecker->name());
-        $this->assertNotEmpty($wpNonceChecker->token());
-        $this->assertSame($tokenParam, $wpNonceChecker->token());
     }
 
     /**
-     * Test to assert that giving string of `space characters` as parameters for createDefault()
-     * results in the default class properties for the WPNonce function.
+     * Test to assert that giving string of `space characters` as parameters
+     * for createDefault() results in the default class properties.
      *
      * covers @method WPNonceFactory::createDefault
-     * covers @method WPNonce::__construct
-     * covers @method WPNonce::setAction
-     * covers @method WPNonce::setName
-     * covers @method WPNonce::setNonceToken
-     * covers @method WPNonce::createNonceToken
+     * covers @method WPNonceCreator::__construct
+     * covers @method WPNonceCreator::setAction
+     * covers @method WPNonceCreator::setName
+     * covers @method WPNonceCreator::createNonceToken
+     * covers @method WPNonceCreator::setNonceToken
      *
      * @return void
      */
@@ -172,8 +160,10 @@ class WPNonceFactoryTest extends TestCase
         $actionParam = '     ';
         $nameParam = '     ';
         $tokenParam = 'my_token';
+
         $wpNonceFactory = new WpNonceFactory();
-        MonkeyFunctions\expect(WPNonce::CREATE_NONCE_FUNCTION_NAME)
+
+        MonkeyFunctions\expect(WPNonceCreator::CREATE_NONCE_FUNCTION_NAME)
             ->with($actionParam)
             ->andReturn($tokenParam);
 
@@ -184,15 +174,13 @@ class WPNonceFactoryTest extends TestCase
     }
 
     /**
-     * Test to assert that giving string of `space characters` as parameters for createDefaultChecker()
-     * results in the default class properties for the WPNonce function.
+     * Test to assert that giving string of `space characters` as parameters
+     * for createDefaultChecker() results in the default class properties.
      *
      * covers @method WPNonceFactory::createDefaultChecker
      * covers @method WPNonceChecker::__construct
      * covers @method WPNonceChecker::setAction
      * covers @method WPNonceChecker::setName
-     * covers @method WPNonceChecker::setNonceToken
-     * covers @method WPNonceChecker::createNonceToken
      *
      * @return void
      */
@@ -201,10 +189,8 @@ class WPNonceFactoryTest extends TestCase
         $actionParam = '     ';
         $nameParam = '     ';
         $tokenParam = 'my_token';
+
         $wpNonceFactory = new WpNonceFactory();
-        MonkeyFunctions\expect(WPNonceChecker::CREATE_NONCE_FUNCTION_NAME)
-            ->with($actionParam)
-            ->andReturn($tokenParam);
 
         $wpNonceChecker = $wpNonceFactory->createDefaultChecker($actionParam, $nameParam);
 

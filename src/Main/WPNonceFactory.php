@@ -29,14 +29,16 @@ class WPNonceFactory
     /**
      * Creates and returns a default WPNonce instance
      *
-     * @return WPNonce
+     * @return WPNonceCreator
      */
     public static function createDefault(
         string $action = self::DEFAULT_NONCE_ACTION,
         string $name = self::DEFAULT_NONCE_NAME
-    ): WPNonce {
+    ): WPNonceCreator {
 
-        return new WPNonce($action, $name);
+        $wpNonceCreator = new WPNonceCreator($action, $name);
+        $wpNonceCreator->createNonceToken($action);
+        return $wpNonceCreator;
     }
 
     /**

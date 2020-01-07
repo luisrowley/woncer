@@ -7,43 +7,30 @@ namespace luisdeb\Woncer\Interfaces;
 interface WPNonceInterface
 {
     /**
-     * Creates a new token tied to a specific action, user, user session, and window of time
+     * Setter method for the `$token` private property.
      *
-     * @see https://developer.wordpress.org/reference/functions/wp_create_nonce/
-     *
-     * @param string $action | the nonce context.
+     * @param string $token | the nonce token value.
      */
-    public function createNonceToken(string $action): string;
+    public function changeNonceToken(string $token);
 
     /**
-     * Retrieve URL with nonce added to URL query.
+     * Getter method for the `$action` private property.
      *
-     * @see https://developer.wordpress.org/reference/functions/wp_nonce_url/
-     *
-     * @param string $actionUrl | the URL to add nonce action.
-     * @param string $action    | the nonce action name.
-     * @param string $name      | nonce name.
+     * @return string $this->action | the nonce action.
      */
-    public function addNonceUrl(
-        string $actionUrl,
-        string $action = null,
-        string $name = null
-    ): string;
+    public function action(): string;
 
     /**
-     * Retrieves or displays the nonce hidden form field.
+     * Getter method for the `$name` private property.
      *
-     * @see https://codex.wordpress.org/Function_Reference/wp_nonce_field
-     *
-     * @param string $action  | the nonce action name.
-     * @param string $name    | nonce name.
-     * @param bool $referer   | whether to create the referer hidden form field.
-     * @param bool $echo      | whether to display the hidden form field.
+     * @return string $this->name | the nonce name.
      */
-    public function addNonceToForm(
-        string $action = null,
-        string $name = null,
-        bool $referer = true,
-        bool $echo = true
-    ): string;
+    public function name(): string;
+
+    /**
+     * Getter method for the `$token` private property.
+     *
+     * @return string $this->token | the nonce token.
+     */
+    public function token(): string;
 }
