@@ -7,32 +7,11 @@ namespace luisdeb\Woncer\Interfaces;
 interface WPNonceInterface
 {
     /**
-     * Setter method for the `$action` private property.
-     *
-     * @param string $action | the nonce action.
-     */
-    public function setAction(string $_action);
-
-    /**
-     * Setter method for the `$name` private property.
-     *
-     * @param string $name | the nonce name.
-     */
-    public function setName(string $_name);
-
-    /**
-     * Setter method for the `$time` private property.
-     *
-     * @param int $time | the nonce lifetime.
-     */
-    public function setTime(int $_time);
-
-    /**
      * Setter method for the `$token` private property.
      *
-     * @param string $action | the nonce context.
+     * @param string $token | the nonce token value.
      */
-    public function setNonceToken(string $_token);
+    public function changeNonceToken(string $token);
 
     /**
      * Getter method for the `$action` private property.
