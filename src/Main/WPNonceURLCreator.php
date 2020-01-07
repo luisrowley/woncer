@@ -50,8 +50,8 @@ class WPNonceURLCreator extends WPNonceCreator
     ): string {
 
         $nonceUrl = "";
-        $nonceAction = (!$action) ? $this->action : $action;
-        $nonceName = (!$name) ? $this->name : $name;
+        $nonceAction = (!$action) ? $this->action() : $action;
+        $nonceName = (!$name) ? $this->name() : $name;
 
         if (filter_var($actionUrl, FILTER_VALIDATE_URL)) {
             $actionUrl = str_replace( '&amp;', '&', $actionUrl );

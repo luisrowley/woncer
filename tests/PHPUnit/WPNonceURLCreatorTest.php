@@ -35,19 +35,29 @@ class WPNonceTest extends TestCase
     {
         $nonceName = "_wpnonce";
         $nonceAction = "-1";
+        $tokenParam = "nonce";
         $actionUrl = 'http://www.somewpdomain.com';
 
         $wpNonceURLCreator = new WPNonceURLCreator($nonceAction, $nonceName);
 
-        MonkeyFunctions\expect(WPNonce::CREATE_NONCE_FUNCTION_NAME)
-            ->once();
-        $wpNonce = $wpNonceFactory->createDefault();
-        $result = $wpNonce->addNonceUrl($actionUrl);
-        $this->assertEmpty($result);
-        MonkeyFunctions\expect(WPNonce::NONCE_URL_FUNCTION_NAME)
+        MonkeyFunctions\expect(WPNonceURLCreator::CREATE_NONCE_FUNCTION_NAME)
             ->once()
-            ->andReturn($actionUrl . '?escaped=with-nonce-action');
-        $result = $wpNonce->addNonceUrl($actionUrl);
+            ->andReturn($tokenParam);
+
+        MonkeyFunctions\expect('esc_html')
+            ->once()
+            ->andReturn($actionUrl.'?'.$nonceName.'='.$tokenParam);
+
+        MonkeyFunctions\expect('add_query_arg')
+            ->once()
+            ->andReturn($actionUrl.'?'.$nonceName.'='.$tokenParam);
+
+        MonkeyFunctions\expect('addNonceUrl')
+            ->once()
+            ->andReturn($actionUrl . '?_wpnonce=nonce');
+
+        $result = $wpNonceURLCreator->addNonceUrl($actionUrl);
         $this->assertStringStartsWith('http', $result);
+        $this->assertSame($actionUrl . '?_wpnonce=nonce', $result);
     }
 }
