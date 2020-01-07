@@ -48,33 +48,64 @@ Installation should be as smooth as:
 
 ## How to use
 
-The logic behind this API is divided in two main Classes: **WPNonce** and **WPNonceChecker**.
+The logic behind this API is divided in two main Classes: **WPNonceCreator** and **WPNonceChecker**.
 
 
 
-
-### WPNonce functions
+### WPNonceCreator functions
 
 ```
-WPNonce ( string $action, string $name )
+WPNonceCreator ( string $action, string $name )
 ```
 
-**WPNonce** handles the functions to create a new Nonce token, and optionally adding it as a query string inside a URL, a hidden form field, or any other custom context if required.
+**WPNonceCreator** handles the functions to create a new Nonce token from request data. You can also use this class to initiate a simple Nonce token independent from context.
 
 Any _Object instance_ will require two parameters: 
 
  1. An action, representing the context in which the nonce is created.
  2. A name for the nonce token.
 
-Upon creation, it will call the [wp_create_nonce](https://developer.wordpress.org/reference/functions/wp_create_nonce/) function to provide with an initial token value.
+After being initialized, you can call any of the 'create' methods which derive from the original [wp_create_nonce](https://developer.wordpress.org/reference/functions/wp_create_nonce/) function to provide with the token value.
+
+#### Creating a Nonce from request
+
+```
+WPNonceCreator::createFromRequest ( WPContextRequester $httpContext = null )
+```
+
+**WPNonceCreator::createFromRequest** function generates a new Nonce token directly from request data. It receives an optional parameter representing the request context data. 
+
+This parameter is an instance of **WPContextRequester** with provides with the tools to more easily access Nonce data.
+
+If this parameter is present, the function will extract the nonce _action_ from the request to generate the token.
+
+As mentioned above, the only optional parameter is:
+
+ 1. `$httpContext` the nonce request context.
+
+
+#### Creating a Nonce from action
+
+```
+WPNonceCreator::createNonceToken ( string $action )
+```
+
+**WPNonceCreator::createNonceToken** function is called automatically every time you call **createFromRequest**. Nonetheless, you can also call it manually whenever needed in order to generate a new Nonce token hash value to fit any custom context.
+
+Following the [official implementation](https://developer.wordpress.org/reference/functions/wp_create_nonce/), it only takes one required _action_ parameter:
+
+ 1. `$action` the nonce field context.
+
+
+### Other creator functions
 
 #### Adding nonce to URL
 
 ```
-WPNonce::addNonceUrl ( string $actionUrl [, string $action, string $name ] )
+WPNonceURLCreator::addNonceUrl ( string $actionUrl [, string $action, string $name ] )
 ```
 
-**WPNonce::addNonceUrl** receives an URL as input and returns the same URL with a Nonce token value attached to it. This URL always refer to a specific _action_ and if no _action_ is provided it will resort to the _default action_ value.
+**WPNonceURLCreator::addNonceUrl** receives an URL as input and returns the same URL with a Nonce token value attached to it. This URL always refer to a specific _action_ and if no _action_ is provided it will resort to the _default action_ value.
 
 Defaults are supported for the optional parameters as per the [official docs](https://codex.wordpress.org/Function_Reference/wp_nonce_url):
 
@@ -86,10 +117,10 @@ Defaults are supported for the optional parameters as per the [official docs](ht
 #### Adding nonce to Form
 
 ```
-WPNonce::addNonceToForm ( [ string $action, string $name, bool $referer, bool $echo ] )
+WPNonceFieldCreator::addNonceToForm ( [ string $action, string $name, bool $referer, bool $echo ] )
 ```
 
-**WPNonce::addNonceToForm** returns or displays the nonce hidden form field. This form field is attached to a given form to guarantee its legitimacy, proving that the contents of the form request came from the current site and not from somewhere else. It internally calls the Wordpress [wp_nonce_field](https://codex.wordpress.org/Function_Reference/wp_nonce_field) function to get the nonce field.
+**WPNonceFieldCreator::addNonceToForm** returns or displays the nonce hidden form field. This form field is attached to a given form to guarantee its legitimacy, proving that the contents of the form request came from the current site and not from somewhere else. It internally calls the Wordpress [wp_nonce_field](https://codex.wordpress.org/Function_Reference/wp_nonce_field) function to get the nonce field.
 
 All parameters are optional: 
  
@@ -97,19 +128,6 @@ All parameters are optional:
  2. `$name` the nonce name. 
  3. `$referer` to specify whether the referer hidden form field should also be created. (Default: true)
  4. `$echo` whether to display or not the hidden fields. (Default: true)
-
-#### Creating a Nonce for any other context
-
-```
-WPNonce::createNonceToken ( string $action )
-```
-
-**WPNonce::createNonceToken** function is called automatically every time you create a new _WPNonce_ object instance, for consistency purposes. Nonetheless, you can also call it manually whenever needed in order to generate a new Nonce token hash value to fit any custom context.
-
-Following the [official implementation](https://developer.wordpress.org/reference/functions/wp_create_nonce/), it only takes one required _action_ parameter:
-
- 1. `$action` the nonce field context.
-
 
 
 
@@ -119,12 +137,33 @@ Following the [official implementation](https://developer.wordpress.org/referenc
 WPNonceChecker ( string $action, string $name )
 ```
 
-**WPNonceChecker** is a child class of _WPNonce_. It inherits its properties and its main purpose is to validate any given Nonce token comming from a set of different possible contexts.
+**WPNonceChecker** main purpose is to validate any given Nonce token comming from a set of different possible contexts.
 
-As a subclass of _WPNonce_ it requires the same parameters for initialization:
+It requires the following parameters for initialization:
 
  1. An action, representing the context in which the nonce is created.
  2. A name for the nonce token.
+
+
+#### Verifying a nonce from request
+
+```
+WPNonceChecker::verifyNonce( [ WPContextRequester $httpContext = null ] )
+```
+
+**WPNonceChecker::verifyNonce** performs nonce validation against structured request data. Think of this as the counterpart of the `ẀPNonceCreator::createFromRequest` function but for verification purposes.
+
+Some real-world applications for this function may include a REST API integration, which may need to validate a given nonce based on HTTP request headers, either for a GET request (think of url nonce validation) or POST (nonce input field sent as part of a form).
+
+This function takes one optional parameter, which is an instance of **WPContextRequester** containing the request data:
+
+ 1. `$httpContext` the nonce request context.
+
+It will return an `integer` that can be one of the following:
+
+ * value `0` if nonce is invalid.
+ * value `1` if nonce was generated in the past 12 hours or less.
+ * value `2` if nonce was generated between 12 and 24 hours ago.
 
 
 #### Validating a nonce from an admin screen
@@ -156,30 +195,9 @@ Parameters are all OPTIONAL:
  3. `$die` whether to die if the nonce is invalid.
 
 
-#### Verifying any other context
-
-```
-WPNonceChecker::verifyNonce( [ string $nonce, string $action ] )
-```
-
-**WPNonceChecker::verifyNonce** verifies the nonce passed in some other context. Think of this as the counterpart of the `ẀPNonce::createNonceToken` function but for verification purposes.
-
-It will return an `integer` that can be one of the following:
-
- * value `0` if nonce is invalid.
- * value `1` if nonce was generated in the past 12 hours or less.
- * value `2` if nonce was generated between 12 and 24 hours ago.
-
-Parameters are:
-
- 1. `$nonce` (_Required_) the nonce field context.
- 2. `$action` (_Optional_) Where to look for nonce in $_REQUEST global variable.
-
-
-
 ### Using the Factory class
 
-The suggested architechture implements the **Factory Pattern** to create a class that initiates a new **WPNonce** or **WPNonceChecker** Object that can be easily used for testing purposes. These new Objects can be created either using the default values for `$action` and `$name`, or custom-made ones.
+The suggested architechture implements the **Factory Pattern** to create a class that initiates a new **WPNonceCreator** or **WPNonceChecker** Object that can be easily used for testing purposes. These new Objects can be created either using the default values for `$action` and `$name`, or custom-made ones.
 
 To use this approach, you can create a new **WPNonceFactory** instance and make a call to its **createDefault** method:
 
@@ -233,9 +251,11 @@ In order to check that all files complies to this, you can simply run:
 
 ### Development Caveats
 
-* The logic behind defining **WPNonceChecker** a subclass of **WPNonce** is that the former will need the properties (_action, name, token_) provided by the latter in order for the verification process to work. Also the _inheritance_ approach allows to apply the DRY (*D*on't *R*epeat *Y*ourself) principle to our code base for shared properties and common methods between these classes.
+* The separation of concerns between **WPNonceCreator** and **WPNonceChecker** made necessary an additional class to define the basic nonce properties(_action, name, token_) sitting on top of these two. This class (**WPNonceAbstract**) was defined as _abstract_ with the intention of providing with the needed flexibility to give alternative Nonce definitions if needed in future implementations.
 
-* On top of this Parent/Child relationship, I added an *Interface* (**WPNonceInterface**) to be implemented by the main **WPNonce** class for consistency purposes. This is to ensure that the class definition meets the minimum expected API methods.
+* To meet with some initial requirements, I added an *Interface* (**WPNonceInterface**) to be implemented by **WPNonceAbstract**. This is to ensure that the class definition meets the minimum expected API methods.
+
+* To isolate the logic behind nonce http requests as much as possible, a dedicated helper class (**WPContextRequester**) was created. This helper class makes easier to compare request parameters thanks to the **ArrayAccess** native interface, which it implements.
 
 * **Strict typing PHP mode** must be activated. This posed a challenge given that some original WP functions expect their `$action` parameter to be either type `int` (**-1** for the default case) OR `string`. In practice, using Strict Types you can't declare a Scalar variable which can expect multiple types. That is why this default `int` type should be converted to `string` for consistency with any other non-default `$action` provided by the user.
 
