@@ -63,7 +63,7 @@ class WPNonceFieldCreator extends WPNonceCreator
         }
      
         if ($echo) {
-            echo $nonceField;
+            echo esc_html($nonceField);
         }
 
         return $nonceField;

@@ -55,6 +55,10 @@ class WPNonceFieldCreatorTest extends TestCase
             ->once()
             ->andReturn($referer);
 
+        MonkeyFunctions\expect('esc_html')
+            ->once()
+            ->andReturn($wpField);
+
         MonkeyFunctions\expect('addNonceToForm')
             ->once()
             ->andReturn($wpField);
