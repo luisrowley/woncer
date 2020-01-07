@@ -117,7 +117,7 @@ class WPNonceCheckerTest extends TestCase
              ->disableOriginalConstructor()
              ->getMock();
 
-        $mockRequest->httpRequest = array("_wpnonce" => "bar", "action" => "foo");
+        $mockRequest->httpRequest = ["_wpnonce" => "bar", "action" => "foo"];
         $mockRequest->httpMethod = 'POST';
 
         $wpNonceChecker = $wpNonceFactory->createDefaultChecker();
